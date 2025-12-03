@@ -43,7 +43,6 @@
 - Options
 - P/E ttm
 - Profit%
-- Sales %(a)
 - ROE%
 - ROA%
 - Debt/Equity
@@ -341,8 +340,8 @@ Cash: $[amount]
 
 | Symbol | Current Tier | Issue | Action |
 |--------|--------------|-------|--------|
-| XYZ | T4 → Avoid | Score dropped to 8 | Sell |
-| ABC | T2 → T4 | Score dropped from 45 to 24 | Trim/Exit |
+| XYZ | T3 → Avoid | Score dropped to 8 | Sell |
+| ABC | T2 → Short | Score dropped from 45 to 24 | Trim/Exit |
 
 - Format: `SYMBOL ($current/$max)` 
 - TBD = empty slot available for new position
