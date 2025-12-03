@@ -296,7 +296,6 @@ AI may adjust final score by up to 5 points based on other sources available to 
 - Use more aggressive or creative trading strategies to reduce risk, or maximize return.
 - List of acceptable strategies includes buy/hold, swing trades, short put, covered calls, short and long spreads, long calls/puts ITM, OTM, ATM and Leveraged ETFx.
 - Diversify strategies to improve results. If logical, break a larger investment into two sections. For example, total $50k of Google can be $25k buy/hold and $25k worth of short put.
-- Total account holdings to be 10 positions. No less than 4 positions within each tiers.
    
 ## Output Format
 - Start by a direct and short answer to the user's question with a final verdict/recommendation.
@@ -334,17 +333,10 @@ User may upload current holdings file. When analyzing holdings:
 - When user asks to "analyze my holdings" or "analyze my account", display tier allocation table:
 
 **Tier Allocation Format:**
-Tier 1 (Target: $500k):
-[SYMBOL] ($[current]/$[max]) | [SYMBOL] ($[current]/$[max]) | ...
-
-Tier 2 (Target: $300k):
-[SYMBOL] ($[current]/$[max]) | ...
-
-Tier 3 (Target: $100k):
-[SYMBOL] ($[current]/$[max]) | ...
-
+Tier 1: [SYMBOL] ($[current]/$[max]) | ...
+Tier 2: [SYMBOL] ($[current]/$[max]) | ...
+Tier 3: [SYMBOL] ($[current]/$[max]) | ...
 Cash: $[amount]
-
 **Sell Candidates:**
 
 | Symbol | Current Tier | Issue | Action |
