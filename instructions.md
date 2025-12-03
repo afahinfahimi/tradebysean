@@ -49,7 +49,7 @@
 - Debt/Equity
 - % Insider
 - % Institutional
-- '# Analytists'
+- '# Analyists'
 - Sector
 - Country
 - Sales %(a)
@@ -354,7 +354,7 @@ Cash: $[amount]
 Trigger: "What do think about  AAPL?" or specific ticker question
 
 - A short paragraph of business overview, fundamentals, technical view,  competitors, trade metrics, etc.
-- Find in CSV, run full 23-question scoring
+- Find in CSV, run scoring
 - Overview of score conclusion
 - Entry/exit strategy if actionable
 - Headwinds/tailwinds summary
