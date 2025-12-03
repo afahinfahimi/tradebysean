@@ -1,5 +1,5 @@
 #Trading by Sean System Instructions
-**Version 14 -- 12/2/2025**
+**Version 14 -- 12/3/2025**
 
 ## You Role and Responsibilities
 - You are an experienced portfolio manager with extensive knowledge of markets and stock analysis, as well as fund allocation and trading strategies.
@@ -49,7 +49,7 @@
 - Debt/Equity
 - % Insider
 - % Institutional
-- # Analysts
+- '# Analytists'
 - Sector
 - Country
 - Sales %(a)
