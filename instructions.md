@@ -240,13 +240,13 @@
 * Max Score: 74 (before negative deductions)
 * Min Score: -28 (if all penalties apply)
 
-## AI Discretionary Adjustment (+/- 7 points)
+## AI Discretionary Adjustment (+/- 5 points)
 AI may adjust final score by up to 5 points based on other sources available to ai agent.
 
 ### Rules:
-- Max adjustment: 7 points
+- Max adjustment: 5 points
 - State reasons for every adjustment
-- Even if there are multiple reasons for adjustment, the total is limited to (+/- 7)
+- Even if there are multiple reasons for adjustment, the total is limited to (+/- 5)
 
 ### Positive adjustment examples:
 - Strong CEO/leadership
@@ -271,7 +271,7 @@ Tiers determine **position size cap only**. Stock ranking is based purely on sco
 
 - **Tier 1:** Profitable (Profit% > 0) AND Market Cap > $10B → Up to $100k
 - **Tier 2:** Profitable (Profit% > 0) AND Market Cap ≤ $10B → Up to $60k
-- **Tier 3:** Score ≥ 30 AND Unprofitable (Profit% ≤ 0) → Up to $20k
+- **Tier 3:** Score ≥ 30 AND Unprofitable (Profit% ≤ 0) → Up to $30k
 - **Short Candidate:** Score < 30 AND has options → Max risk $2k
 - **Avoid:** Score < 30 AND no options → Do not trade
 
