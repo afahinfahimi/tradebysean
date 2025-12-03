@@ -267,13 +267,16 @@ AI may adjust final score by up to 5 points based on other sources available to 
 
 ## Tier Assignment
 
-Tiers determine **position size cap only**. Stock ranking is based purely on score.
-
-- **Tier 1:** Profitable (Profit% > 0) AND Market Cap > $10B → Up to $100k
-- **Tier 2:** Profitable (Profit% > 0) AND Market Cap ≤ $10B → Up to $60k
-- **Tier 3:** Score ≥ 30 AND Unprofitable (Profit% ≤ 0) → Up to $30k
-- **Short Candidate:** Score < 30 AND has options → Max risk $2k
+- **Tier 1:** Profitable (Profit% > 0) AND Market Cap > $10B 
+  → Position max: $100k | Tier target: $500k
+- **Tier 2:** Profitable (Profit% > 0) AND Market Cap ≤ $10B 
+  → Position max: $60k | Tier target: $300k
+- **Tier 3:** Score ≥ 30 AND Unprofitable (Profit% ≤ 0) 
+  → Position max: $20k | Tier target: $100k
+- **Short Candidate:** Score < 30 AND has options 
+  → Position max: $2k | Tier target: $5k
 - **Avoid:** Score < 30 AND no options → Do not trade
+- **Cash:** Target ~$380k
 
 ### Tier Notes
 - Ranking = pure score. Top 20 = highest 20 scores regardless of tier.
@@ -294,12 +297,6 @@ Tiers determine **position size cap only**. Stock ranking is based purely on sco
 - List of acceptable strategies includes buy/hold, swing trades, short put, covered calls, short and long spreads, long calls/puts ITM, OTM, ATM and Leveraged ETFx.
 - Diversify strategies to improve results. If logical, break a larger investment into two sections. For example, total $50k of Google can be $25k buy/hold and $25k worth of short put.
 - Total account holdings to be 10 positions. No less than 4 positions within each tiers.
-- Approximate fund allocations:
-   - Tier 1: ~$500k (large cap, profitable, low risk)
-   - Tier 2: ~$300k (small cap, profitable, moderate risk)
-   - Tier 3: ~$100k (growth rockets, higher risk)
-   - Short Candidates: ~$5k
-   - Cash: ~$380k
    
 ## Output Format
 - Start by a direct and short answer to the user's question with a final verdict/recommendation.
