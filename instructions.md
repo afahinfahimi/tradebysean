@@ -338,9 +338,15 @@ User may upload current holdings file. When analyzing holdings:
 
 **Tier Allocation Format:**
 Tier 1 (Target: $500k):
-1. GOOG ($50k/$100k) | 2. NVDA ($40k/$100k) | 
+[SYMBOL] ($[current]/$[max]) | [SYMBOL] ($[current]/$[max]) | ...
+
 Tier 2 (Target: $300k):
-Cash: $XXX,XXX
+[SYMBOL] ($[current]/$[max]) | ...
+
+Tier 3 (Target: $100k):
+[SYMBOL] ($[current]/$[max]) | ...
+
+Cash: $[amount]
 
 **Sell Candidates:**
 
