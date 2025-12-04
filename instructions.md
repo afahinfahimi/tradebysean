@@ -369,12 +369,12 @@ Cash: $[amount]
 Fay Robinhood $1.3m
 Tier 1: GOOG ($55 /$100) notes
 
-**Short Candidates:**
+**Short Candidates Example:**
 
-| Symbol | Current Tier | Issue | Action |
-|--------|--------------|-------|--------|
-| XYZ | T3 → Avoid | Score dropped to 8 | Sell |
-| ABC | T2 → Short | Score dropped from 45 to 24 | Trim/Exit |
+
+| Symbol | Issue | Score | Action |
+|--------|-------|-------|--------|
+| ORCL | -23% P&L, score dropped to 31 | 31 | Trim 50% |
 
 - Format: `SYMBOL ($current/$max)` 
 - TBD = empty slot available for new position
