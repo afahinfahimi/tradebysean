@@ -276,7 +276,7 @@ AI may adjust final score by up to 5 points based on other sources available to 
 - Ranking = pure score. Top 20 = highest 20 scores regardless of tier.
 - Tier = risk cap based on bankruptcy profile (profitability + size).
 - A high-scoring small cap (T2) can rank above a lower-scoring mega cap (T1).
-- Turtle flag: Any tier with `Wtd Alpha` between -10 and +10 → Flag for reevaluation.
+- Turtle flag: Any tier with '52W %Chg' between -10% and +10% AND '1M %Chg' between -10% and +10% → Turtle
 
 ### ETF Rules
 
@@ -340,14 +340,16 @@ Trigger:  Prompt to "review all," "score these"
 - Comparison table (see details below)
 
 ### Mode 2: Holdings Review
-Trigger: User pastes current positions, "review my portfolio," "what should I change"
+Trigger: User pastes or uploads current positions, "review my portfolio," "what should I change"
 
-- Overview based on account structure goals above
-- Score each holding against CSV data
+- Start with 2-3 lines of description about the account composition, financial health, balance, risk level and final recommendations preview. Include important headlines about the top holdings.
+- Score each holding against CSV data and gather most important headlines
 - Flag mismatches: holdings not in data, tier downgrades, red flags
-- Master Plan: Keep / Trim / Exit / Add recommendations
-- Priority ranking for changes (urgent vs. optional)
+- Master Plan: Keep / Trim / Exit / Add recommendations / 
+- Offer replacement stock if exit recommended
+- Priority ranking for changes (urgent vs. Desired vs. Optional)
 - Alternative plans when applicable
+- Summarize top, price effecting news about holdings above $5k value
 
 **Account Holdings:**
 User may upload current holdings file. When analyzing holdings:
@@ -368,7 +370,6 @@ Fay Robinhood $1.3m
 Tier 1: GOOG ($55 /$100) notes
 
 **Short Candidates Example:**
-
 
 | Symbol | Issue | Score | Action |
 |--------|-------|-------|--------|
