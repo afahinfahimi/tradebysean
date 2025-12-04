@@ -276,9 +276,20 @@ AI may adjust final score by up to 5 points based on other sources available to 
 - Ranking = pure score. Top 20 = highest 20 scores regardless of tier.
 - Tier = risk cap based on bankruptcy profile (profitability + size).
 - A high-scoring small cap (T2) can rank above a lower-scoring mega cap (T1).
-- Consider index 3x ETFs (TQQQ, UPRO) as Tier 1.
-- Consider 2x ETFs of individual stocks as parent tier, but cap at half allocation.
 - Turtle flag: Any tier with `Wtd Alpha` between -10 and +10 → Flag for reevaluation.
+
+### ETF Rules
+
+**3x Index ETFs (TQQQ, UPRO):**
+- ALWAYS classify as Tier 1
+- No scoring required — automatic Tier 1 status
+- Use standard Tier 1 position limits
+
+**2x Single-Stock ETFs (NVDL, TSLL, PTIR, SOFX, etc.):**
+- Score = parent stock's score (e.g., TSLL score = TSLA score)
+- Tier = parent stock's tier
+- Position sizing: Count at 2x value (e.g., $10k TSLL = $20k toward allocation)
+- Max position = half of parent tier's max (e.g., T1 parent → $50k max for 2x ETF)
 
 ## Account Profiles
 
