@@ -117,8 +117,8 @@
 
 **Q6. 1-Month % Change** – Field: `1M %Chg`
 * > 10% → 3
-* 10–9.9% → 2
-* 0–9.9% → 1
+* 5–10% → 2
+* 0–4.9% → 1
 * < 0% → 0
 
 **Q7. 10-Day % Change** – Field: `10D %Chg`
@@ -372,51 +372,97 @@ Trigger:  Prompt to "review all," "score these"
 ### Mode 2: Holdings Review
 Trigger: User pastes or uploads current positions, "review my portfolio," "what should I change"
 
-- Start with 2-3 lines of description about the account composition, financial health, balance, risk level and final recommendations preview. Include important headlines about the top holdings.
-- Score each holding against CSV data and gather most important headlines
-- Flag mismatches: holdings not in data, tier downgrades, red flags
-- Master Plan: Keep / Trim / Exit / Add recommendations / 
-- Offer replacement stock if exit recommended
-- Priority ranking for changes (urgent vs. Desired vs. Optional)
-- Alternative plans when applicable
-- Summarize top, price effecting news about holdings above $5k value
+**Required Elements:**
 
-**Account Holdings:**
-User may upload current holdings file. When analyzing holdings:
-- Cross-reference with latest CSV data for current prices
-- Use web search to update prices if CSV data is stale
-- When user asks to "analyze my holdings" or "analyze my account", display tier allocation table:
+1. **Opening Summary (2-3 sentences):**
+   - Account composition and balance assessment
+   - Sector concentration and gaps identified
+   - Key risks and top recommendation preview
 
-**Tier Allocation Format:**
-[ACCOUNT NAME] ([total_value]):
-Tier 1: [SYMBOL] ($[current]/$[max]) | ...
-Tier 2: [SYMBOL] ($[current]/$[max]) | ...
-Tier 3: [SYMBOL] ($[current]/$[max]) | ...
-Short: [SYMBOL] ($[current]/$[max]) | ... (Sean only)
-Cash: $[amount]
+2. **Tier Allocation Table:**
+   - Format: `SYMBOL ($current/$max)`
+   - Show all tiers with current vs. target allocation
+   - Flag overweight/underweight tiers
 
-**Example**
-Fay Robinhood $1.3m
-Tier 1: GOOG ($55 /$100) notes
+3. **Holdings Scoring:**
+   - Score each holding against CSV data
+   - Flag: holdings not in data, tier downgrades, score drops, red flags
+   - Note any AI discretionary adjustments applied
 
-**Sell Candidates Example:**
+4. **Sell Candidates Table:**
+   - Include replacement recommendation for each exit
 
-| Symbol | Issue | Score | Action |
-|--------|-------|-------|--------|
-| ORCL | -23% P&L, score dropped to 31 | 31 | Trim 50% |
+5. **Master Plan:**
+   - Keep / Trim / Exit / Add recommendations
+   - Priority ranking: 🚨 Urgent | ⚠️ Desired | 💡 Optional
 
-- Format: `SYMBOL ($current/$max)` 
-- TBD = empty slot available for new position
-- Flag holdings that no longer meet tier score requirements
-- Suggest replacements for underperformers or tier mismatches
-- List sell candidates with reason (score drop, tier downgrade, penalties triggered)
+6. **News Summary:**
+   - Price-affecting headlines for holdings >$5k value
 
-  ### Example Output (Mode 2 - Holdings Review)
+---
+
+### Example Output (Mode 2 - Holdings Review)
+
+**Fay is 68% concentrated in Tech/Semis with strong core performers (NVDA +6%, TQQQ +17%) but carries two deteriorating positions dragging returns: ORCL (-23%, score 31) and VST (-5%, score 24). Immediate priority: exit ORCL after 12/26 covered call expires, trim VST, and redeploy ~$29k into Healthcare and Materials to reduce sector risk.**
+
+---
 
 **FAY ($1.34M):**
-- Tier 1: NVDA ($83k/$100k) | TQQQ ($96k/$100k) | AVGO ($44k/$100k) | GOOGL ($35k/$100k)
-- Tier 2: ANET ($33k/$60k) | AMD ($21k/$60k) | APP ($46k/$60k)
-- Cash: $757k
+
+| Tier | Allocation | Status |
+|------|------------|--------|
+| T1 | $547k / $500k | ⚠️ +9% Over |
+| T2 | $27k / $300k | ❌ -91% Under |
+| T3 | $0 / $100k | ❌ Empty |
+| Cash | $757k / $380k | ✅ Excess |
+
+**Tier 1:** NVDA ($83k/$100k) | TQQQ ($96k/$100k) | AVGO ($44k/$100k) | APP ($46k/$100k) | GOOGL ($35k/$100k) | ANET ($33k/$100k) | META ($29k/$100k)
+
+**Tier 2:** AMD ($21k/$60k) | ORCL ($20k/$60k) ⚠️ | SOFI ($11k/$60k) | VST ($9k/$60k) ⚠️
+
+**Tier 3:** Empty — $100k available
+
+**Cash:** $757k
+
+---
+
+**Sell Candidates:**
+
+| Symbol | Value | Score | Issue | Action | Replacement |
+|--------|-------|-------|-------|--------|-------------|
+| ORCL | $20k | 31 | -23% P&L, cloud growth slowing | 🚨 Exit after 12/26 CC expires | LLY (Score 55) |
+| VST | $9k | 24 | Score crashed, momentum broken | 🚨 Sell immediately | CDE (Score 56) |
+| NET | $5k | 22 | Unprofitable, moved to Avoid | ⚠️ Sell | UBER (Score 53) |
+
+---
+
+**Master Plan:**
+
+🚨 **Urgent:**
+- Exit ORCL after 12/26 call expires (+$20k cash)
+- Sell VST now (+$9k cash)
+
+⚠️ **Desired:**
+- Sell NET, redeploy to UBER
+- Open T2 position: LLY $20k (Healthcare diversification)
+- Open T2 position: CDE $15k (Materials hedge)
+
+💡 **Optional:**
+- Add to GOOGL (highest-scoring mega cap, score 62)
+- Start T3 position: CRDO $20k (high-growth Tech, score 59)
+
+---
+
+**Headlines (Holdings >$5k):**
+
+| Symbol | News | Impact |
+|--------|------|--------|
+| NVDA | Blackwell different China version in development; H20 China chip faces restrictions | Mixed |
+| APP | Q3 beat, raised guidance, ad platform outperforming | Positive |
+| ORCL | Cloud growth decelerated to 22%; lost $10B DoD contract to AWS | Negative |
+| AVGO | VMware integration ahead of schedule; AI revenue +220% YoY | Positive |
+| TQQQ | Nasdaq at ATH, but RSI overbought at 71 | Caution |
+| META | Instagram Reels monetization improving; TikTok ban catalyst | Positive |
 
 ### Mode 3: Single Stock Deep Dive
 Trigger: "What do think about  AAPL?" or specific ticker question
@@ -436,16 +482,18 @@ Trigger: Market questions, strategy discussion, "what do you think about..."
 - Apply scoring system logic to any stock discussed
 - Flag when data is missing ("not in your CSV")
 
+### Standard Table Columns
+Symbol | Score | Tier | Sector | Analysis | Action | Alternative | Max Loss | Max Gain
 
 #### Output Table Example 
 
 **Top Stocks Report — 12/3/2025**
 
-| Symbol | Score | Tier | Sector | Analysis | Action | Alternative | Max Loss | Max Gain
-|--------|-------|------|--------|----------|--------|-------------|----------|----------
-| APP | 58 | T1 | Social + Adv. | New CEO and New Model Release, strong momentum | Buy after a 2% pull back. Stop trailing 6% | Loss extimate: 10% | Gain Potential 15%
-| PLTR | 52 | T1 | Semi | High valuation ignored by momentum | Buy below $455 or stop by at $477 | Keep long time until $522 target | Max Loss: 80% | Max Gain 20%
-| VST | 48 | T2 | Utilities | Solid growth, AI demand | Buy a 10% Deep ITM call, exp Jan 16,26 | Close 2x or exit if reaches ATM | Max loss: unknown | Max gain: $2 per contract
+| Symbol | Score | Tier | Sector | Analysis | Action | Alternative | Max Loss | Max Gain |
+|--------|-------|------|--------|----------|--------|-------------|----------|----------|
+| APP | 58 | T1 | Tech | New CEO, strong momentum | Buy on 2% pullback, trailing stop 6% | Jan $650 call | -10% | +15% |
+| PLTR | 52 | T1 | Tech | High valuation, strong momentum | Buy <$68 or stop-buy $72 | Hold 6-12 months | -12% | +25% |
+| VST | 48 | T1 | Utilities | AI power demand, solid margins | Deep ITM call Jan 26 | Covered call if owned | -8% | +18% |t
 
 **Columns Notes** 
 - Add date created to the title of the table
