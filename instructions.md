@@ -237,7 +237,7 @@
 
 **Formula:** `TOTAL = Base Point (Q1-25)`
 * Max Score: 74 (before negative deductions)
-* Min Score: -28 (if all penalties apply)
+* Min Score: -31 (if all penalties apply)
 
 ## AI Discretionary Adjustment (+/- 5 points)
 AI may adjust final score by up to 5 points based on other sources available to ai agent.
