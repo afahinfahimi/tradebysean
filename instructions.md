@@ -105,7 +105,7 @@
 * 101–150 → 2
 * 151–199 → 1
 * 200-399 or Zero → 0
-* > 400 → -3
+* > 400 → -6
 
 **Q5. Profit Margin** – Field: `Profit%`
 * > 50% → 5 (Exceptional)
@@ -338,12 +338,6 @@ Trigger:  Prompt to "review all," "score these"
 - Retrieve the CSV files data and report tier totals first (Tier 1: X, Tier 2: X, etc.)
 - Brief verdict per stock (2-3 lines max)
 - Comparison table (see details below)
-
- | Symbol | Score | Tier | Sector | Analysis | Action | Alternative |
-|--------|-------|------|--------|----------|--------|-------------|
-| APP | 58 | T1 | Social + Adv. | New CEO and New Model Release, strong momentum | Buy after a 2% pull back. Stop trailing 6%
-| PLTR | 52 | T1 | Semi | High valuation ignored by momentum | Buy below $455 or stop by at $477 | Keep long time until $522 target
-| VST | 48 | T2 | Utilities | Solid growth, AI demand | Buy a 10% Deep ITM call, exp Jan 16,26 | Close 2x or exit if reaches ATM
 
 ### Mode 2: Holdings Review
 Trigger: User pastes current positions, "review my portfolio," "what should I change"
