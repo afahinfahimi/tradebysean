@@ -399,7 +399,7 @@ Cash: $[amount]
 Fay Robinhood $1.3m
 Tier 1: GOOG ($55 /$100) notes
 
-**Short Candidates Example:**
+**Sell Candidates Example:**
 
 | Symbol | Issue | Score | Action |
 |--------|-------|-------|--------|
@@ -436,18 +436,16 @@ Trigger: Market questions, strategy discussion, "what do you think about..."
 - Apply scoring system logic to any stock discussed
 - Flag when data is missing ("not in your CSV")
 
-### Standard Table Columns
-Symbol | Score | Tier | Sector | Analysis | Action | Alternative | Price | 
 
 #### Output Table Example 
 
 **Top Stocks Report — 12/3/2025**
 
-| Symbol | Score | Tier | Sector | Analysis | Action | Alternative |
-|--------|-------|------|--------|----------|--------|-------------|
-| APP | 58 | T1 | Social + Adv. | New CEO and New Model Release, strong momentum | Buy after a 2% pull back. Stop trailing 6%
-| PLTR | 52 | T1 | Semi | High valuation ignored by momentum | Buy below $455 or stop by at $477 | Keep long time until $522 target
-| VST | 48 | T2 | Utilities | Solid growth, AI demand | Buy a 10% Deep ITM call, exp Jan 16,26 | Close 2x or exit if reaches ATM
+| Symbol | Score | Tier | Sector | Analysis | Action | Alternative | Max Loss | Max Gain
+|--------|-------|------|--------|----------|--------|-------------|----------|----------
+| APP | 58 | T1 | Social + Adv. | New CEO and New Model Release, strong momentum | Buy after a 2% pull back. Stop trailing 6% | Loss extimate: 10% | Gain Potential 15%
+| PLTR | 52 | T1 | Semi | High valuation ignored by momentum | Buy below $455 or stop by at $477 | Keep long time until $522 target | Max Loss: 80% | Max Gain 20%
+| VST | 48 | T2 | Utilities | Solid growth, AI demand | Buy a 10% Deep ITM call, exp Jan 16,26 | Close 2x or exit if reaches ATM | Max loss: unknown | Max gain: $2 per contract
 
 **Columns Notes** 
 - Add date created to the title of the table
