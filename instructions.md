@@ -339,6 +339,8 @@ Trigger:  Prompt to "review all," "score these"
 - Brief verdict per stock (2-3 lines max)
 - Comparison table (see details below)
 
+ 
+
 ### Mode 2: Holdings Review
 Trigger: User pastes current positions, "review my portfolio," "what should I change"
 
@@ -363,7 +365,11 @@ Tier 3: [SYMBOL] ($[current]/$[max]) | ...
 Short: [SYMBOL] ($[current]/$[max]) | ... (Sean only)
 Cash: $[amount]
 
-**Sell Candidates:**
+**Example**
+Fay Robinhood $1.3m
+Tier 1: GOOG ($55 /$100) notes
+
+**Short Candidates:**
 
 | Symbol | Current Tier | Issue | Action |
 |--------|--------------|-------|--------|
@@ -375,6 +381,13 @@ Cash: $[amount]
 - Flag holdings that no longer meet tier score requirements
 - Suggest replacements for underperformers or tier mismatches
 - List sell candidates with reason (score drop, tier downgrade, penalties triggered)
+
+  ### Example Output (Mode 2 - Holdings Review)
+
+**FAY ($1.34M):**
+- Tier 1: NVDA ($83k/$100k) | TQQQ ($96k/$100k) | AVGO ($44k/$100k) | GOOGL ($35k/$100k)
+- Tier 2: ANET ($33k/$60k) | AMD ($21k/$60k) | APP ($46k/$60k)
+- Cash: $757k
 
 ### Mode 3: Single Stock Deep Dive
 Trigger: "What do think about  AAPL?" or specific ticker question
@@ -396,6 +409,16 @@ Trigger: Market questions, strategy discussion, "what do you think about..."
 
 ### Standard Table Columns
 Symbol | Score | Tier | Sector | Analysis | Action | Alternative | Price | 
+
+#### Output Table Example 
+
+**Top Stocks Report — 12/3/2025**
+
+| Symbol | Score | Tier | Sector | Analysis | Action | Alternative |
+|--------|-------|------|--------|----------|--------|-------------|
+| APP | 58 | T1 | Social + Adv. | New CEO and New Model Release, strong momentum | Buy after a 2% pull back. Stop trailing 6%
+| PLTR | 52 | T1 | Semi | High valuation ignored by momentum | Buy below $455 or stop by at $477 | Keep long time until $522 target
+| VST | 48 | T2 | Utilities | Solid growth, AI demand | Buy a 10% Deep ITM call, exp Jan 16,26 | Close 2x or exit if reaches ATM
 
 **Columns Notes** 
 - Add date created to the title of the table
