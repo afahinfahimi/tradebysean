@@ -67,15 +67,16 @@
 ### Base Point Questions
 
 **Q1. Sales Growth:** – Fields: `Sales %(a)` and `Sales(q)` vs `Sales(q-4)`
+* "Annual" = Sales %(a) (YoY % from data)
+* "Quarterly" = (Sales(q) - Sales(q-4)) / Sales(q-4) as %
 * Annual ≥50% AND Quarterly > Annual → 5 (Accelerating Exceptional)
-* Annual ≥50% AND Quarterly positive but ≤ Annual → 4 (Steady Exceptional)
+* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 4 (Steady Exceptional)
 * Annual 20-49% AND Quarterly > Annual → 4 (Accelerating Strong)
-* Annual 20-49% AND Quarterly positive but ≤ Annual → 3 (Steady Strong)
-* Annual 1-19% AND Quarterly positive → 2 (Growing)
-* Annual 0% AND Quarterly positive → 1 (Stable)
-* Annual positive AND Quarterly negative → 1 (Decelerating)
-* Annual negative AND Quarterly positive → 1 (Recovering)
-* Annual negative AND Quarterly negative → 0 (Declining)
+* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 3 (Steady Strong)
+* Annual 1-19% AND Quarterly > 0 → 2 (Growing)
+* Annual ≥ 0 AND Quarterly ≤ 0 → 1 (Stalling)
+* Annual < 0 AND Quarterly > 0 → 1 (Recovering)
+* Annual < 0 AND Quarterly ≤ 0 → 0 (Declining)
 
 **Q2. Operating Income Growth:** – Fields: `Oper Income %(a)` and `Oper Income(q)` vs `Oper Income(q-4)`
 * Annual ≥50% AND Quarterly > Annual → 5 (Accelerating Exceptional)
@@ -123,9 +124,9 @@
 * < 0% → 0
 
 **Q7. 10-Day % Change** – Field: `10D %Chg`
-* > 15.01% → 3
-* 5.01–15% → 2
-* 0–5% → 1
+* ≥ 15% → 3
+* 5% to 14.99% → 2
+* 0% to 4.99% → 1
 * < 0% → 0
 
 **Q8. Relative Volume** – Calculate: `Volume ÷ 20D Avg Vol`
@@ -135,10 +136,10 @@
 * < 0.8× → 0
 
 **Q9. Price vs Moving Averages** – Compare: `Last` vs `50D MA` vs `200D MA`
-* Above both → 3
+* Above both (Last > 50D AND Last > 200D) → 3
 * Above one → 2
 * Below both but at least one within 5% → 1
-* Below both over 5%→ 0
+* Below both by more than 5% → 0
 
 **Q10. 20-Day Avg Volume** – Field: `20D Avg Vol`
 * > 1M → 3
@@ -147,16 +148,17 @@
 * < 200k → 0
 
 **Q11. Ownership & Coverage** – Fields: `% Insider`, `% Institutional`, `# Analysts`
-* % Insider > 0% → 1 pt
-* % Institutional > 20% → 1 pt
-* # Analysts > 5 → 1 pt
+(Add 1 point for each true; max 3 points)
+* % Insider > 0% → +1
+* % Institutional > 20% → +1
+* # Analysts > 5 → +1
 
 **Q12. Debt/Equity** – Field: `Debt/Equity`
 * < 0 (Negative Equity) → -5
-* > 3.0 → -3
-* 1.5–3.0 → 1
-* 0.5–1.5 → 2
-* < 0.5 → 3
+* ≥ 3.0 → -3
+* 1.5 to 2.99 → 1
+* 0.5 to 1.49 → 2
+* 0 to 0.49 → 3
 
 **Q13. Weighted Alpha** – Field: `Wtd Alpha`
 * > 80 → 3
@@ -183,11 +185,12 @@
 * 5–9.9% → 1
 * < 5% → 0
 
-**Q17. Range Position** – Calculate: (Price−`1st Sup`)÷(`1st Res`−`1st Sup`)
-* Breakout: Price > `1st Res` → 4​
-* Buy Zone: Bottom 20% of range (ratio < 0.20) → 3​
-* Mid-Range: Middle 60% of range (0.20–0.80) → 2​
-* Trap: Top 19% of range (ratio > 0.80 and Price ≤`1st Res`) → 0​
+**Q17. Range Position** – Calculate: (Price − `1st Sup`) ÷ (`1st Res` − `1st Sup`)
+* If 1st Res ≤ 1st Sup → skip question (bad data), score 0
+* Breakout: Price > 1st Res → 4
+* Buy Zone: ratio < 0.20 → 3
+* Mid-Range: ratio 0.20 to 0.80 → 2
+* Trap: ratio > 0.80 AND Price ≤ 1st Res → 0
 
 **Q18. Has Options** – Field: `Options`
 * Yes → 1
@@ -214,10 +217,10 @@
 * Profit% < -25% AND Wtd Alpha < 0 → -5
 
 **Q23. Trend Consistency** – Fields: `3M %Chg` and `52W %Chg`
-* Both positive AND 52W > 3M (steady climb) → 3
-* Both positive AND 3M > 52W (accelerating) → 3
-* Only one positive → 1
-* Both negative → 0
+* Both > 0 AND 52W ≥ 3M (steady climb) → 3
+* Both > 0 AND 3M > 52W (accelerating) → 3
+* Only one > 0 → 1
+* Both ≤ 0 → 0
 
 **Q24. Financial Strength** — Fields: `Profit%`, `ROE%`, `Debt/Equity`
 
@@ -282,12 +285,11 @@ State reason and direction. Use 0 if nothing applies.
 ---
 
 ## Tier Assignment
-
-- **Tier 1:** Profitable (Profit% > 0) AND Market Cap > $10B
-- **Tier 2:** Profitable (Profit% > 0) AND Market Cap ≤ $10B
+- **Tier 1:** Profitable (Profit% > 0) AND Market Cap > $10B AND Score ≥ 35
+- **Tier 2:** Profitable (Profit% > 0) AND Market Cap ≤ $10B AND Score ≥ 35
 - **Tier 3:** Score ≥ 30 AND Unprofitable (Profit% ≤ 0)
-- **Short Candidate:** Score < 30 AND has options
-- **Avoid:** Score < 30 AND no options → Do not trade
+- **Short Candidate:** Score < 30 AND has options AND (Q12 ≤ -3 OR Q20 = -5 OR Q21 = -5 OR Q22 = -5)
+- **Avoid:** All others not meeting above criteria
 
 ### Tier Notes
 - Ranking = pure score. Top 20 = highest 20 scores regardless of tier.
@@ -296,17 +298,21 @@ State reason and direction. Use 0 if nothing applies.
 - Turtle flag: Any tier with '52W %Chg' between -10% and +10% AND '1M %Chg' between -10% and +10% → Turtle
 
 ### ETF Rules
-
 **3x Index ETFs (TQQQ, UPRO):**
 - ALWAYS classify as Tier 1
 - No scoring required — automatic Tier 1 status
 - Use standard Tier 1 position limits
+- Never short — long only
 
 **2x Single-Stock ETFs (NVDL, TSLL, PTIR, SOFX, etc.):**
 - Score = parent stock's score (e.g., TSLL score = TSLA score)
 - Tier = parent stock's tier
 - Position sizing: Count at 2x value (e.g., $10k TSLL = $20k toward allocation)
 - Max position = half of parent tier's max (e.g., T1 parent → $50k max for 2x ETF)
+
+### Medical/Pharma Rule
+- Max $20k per position (applies to each account separately)
+- Minimum score 45 required
 
 ## Account Profiles
 
@@ -333,7 +339,6 @@ No short candidates (assigned to Sean account).
 - Acceptable strategies: buy/hold, swing trades, short put, covered calls, spreads, long calls/puts (ITM/OTM/ATM), leveraged ETFs.
 - Diversify: split larger positions across strategies (e.g., $50k GOOG = $25k shares + $25k short put).
 - Use variations of same stock across accounts: shares, options, 2x ETF.
-- Medical/Pharma: max $20k, minimum score 45.
 - Always offer alternatives to stock selection and strategy.
 - Consider existing holdings when recommending.
 
