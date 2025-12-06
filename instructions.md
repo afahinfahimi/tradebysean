@@ -113,9 +113,10 @@ Note: `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
 * 61–100 → 3
 * 101–150 → 2
 * 151–299 → 1
-* 300-400 → 0
+* 300–400 → 0
 * > 400 → -4
-* ≤ 0 (unprofitable) → -1
+* 0 (no earnings or exactly breakeven) → -1
+* < 0 (unprofitable) → -1
 
 **Q5. Profit Margin** – Field: `Profit%`
 * > 50% → 5 (Exceptional)
@@ -194,8 +195,9 @@ Note: `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
 * < 5% → 0
 
 **Q17. Range Position** – Calculate: (Price − `1st Sup`) ÷ (`1st Res` − `1st Sup`)
+* If 1st Res AND 1st Sup are both Null/Empty → 0 (skip, insufficient data)
 * If 1st Res is Null/Empty AND Price > 1st Sup → 4 (Breakout)
-* If 1st Res ≤ 1st Sup → skip question (bad data), score 0
+* If 1st Res ≤ 1st Sup → 0 (skip, bad data)
 * Breakout: Price > 1st Res → 4
 * Buy Zone: ratio < 0.20 → 3
 * Mid-Range: ratio 0.20 to 0.80 → 2
@@ -294,7 +296,7 @@ Default to 0 if data unavailable.
 * ≥ 3 → -1 (Expensive vs growth)
 * Negative or N/A → 0 (skip)
 
-**Q33. Short Squeeze Risk** – Field: `% Float`
+**Q33. Short Squeeze Risk** – Field: `% Float (Short Interest as % of Float)`
 * < 15% → 0 (Normal — shortable if other criteria met)
 * ≥ 15% → +1 (Squeeze potential for longs; excluded from Short Candidates)
   
@@ -310,23 +312,31 @@ State reason and direction. Use 0 if nothing applies.
 
 ## Score Calculation 
 **Formula:** `TOTAL = Base Points (Q1-25) + AI Assessment (Q26-30) + Valuation Adjust (Q31-33) + Event-Driven`
-* Max Score: 89
-* Min Score: -40
+* Max Score: 85
+* Min Score: -47
 
 ---
 
 ## Tier Assignment
 - **Tier 1:** Profitable (Profit% > 0) AND Market Cap > $10B AND Score ≥ 35
 - **Tier 2:** Profitable (Profit% > 0) AND Market Cap ≤ $10B AND Score ≥ 35
-- **Tier 3:** Score ≥ 30 AND (Unprofitable (Profit% ≤ 0) OR (Profitable AND Score < 35))
-- **Short Candidate:** Score < 30 AND has options AND (Q12 ≤ -3 OR Q20 = -5 OR Q21 = -5 OR Q22 = -5) AND % Float < 15%
+- **Tier 3:** Score 30–34 (any profitability) OR Score ≥ 35 with Profit% ≤ 0
+- **Short Candidate:** Score < 30 AND has options AND (Q12 ≤ 1 OR Q20 = -5 OR Q21 = -5 OR Q22 = -5) AND `% Float (Short Interest as % of Float)` < 15%
 - **Avoid:** All others not meeting above criteria
 
-### Tier Notes
-- Ranking = pure score. Top 20 = highest 20 scores regardless of tier.
-- Tier = risk cap based on bankruptcy profile (profitability + size).
-- A high-scoring small cap (T2) can rank above a lower-scoring mega cap (T1).
-- Turtle flag: Any tier with '52W %Chg' between -10% and +10% AND '1M %Chg' between -10% and +10% → Turtle
+### Tie-Breaker Rules
+When stocks have identical scores, rank by:
+1. Higher Profit% (profitability)
+2. Higher Wtd Alpha (momentum)
+3. Lower Debt/Equity (financial strength)
+4. Higher Market Cap (liquidity/stability)
+
+### Tie-Breaker Rules
+When stocks have identical scores, rank by:
+1. Higher Profit% (profitability)
+2. Higher Wtd Alpha (momentum)
+3. Lower Debt/Equity (financial strength)
+4. Higher Market Cap (liquidity/stability)
 
 ### ETF Rules
 **3x Index ETFs (TQQQ, UPRO):**
@@ -336,10 +346,13 @@ State reason and direction. Use 0 if nothing applies.
 - Never short — long only
 
 **2x Single-Stock ETFs (NVDL, TSLL, PTIR, SOFX, etc.):**
+- Identify by: ETF name containing parent ticker or "2x" in description
+- Common issuers: Direxion, GraniteShares, T-Rex
 - Score = parent stock's score (e.g., TSLL score = TSLA score)
 - Tier = parent stock's tier
 - Position limit: Half of parent tier's max in actual dollars (e.g., T1 parent → $50k max for 2x ETF)
 - Allocation impact: Counts at 2x value toward tier total (e.g., $50k TSLL = $100k toward T1 allocation)
+- If parent stock not in CSV, alert user and request parent ticker for scoring
 
 ### Medical/Pharma Rule
 - Max $20k per position (applies to each account separately)
@@ -348,9 +361,6 @@ State reason and direction. Use 0 if nothing applies.
 ## Account Profiles
 
 **Override:** Medical/Pharma stocks capped at $20k max per position regardless of Tier.
-
-### Fay ($1.3M) — Wealth Preservation
-...
 
 ### Fay ($1.3M) — Wealth Preservation
 | Tier | Target | Position Max (Pharma: $20k cap) |
@@ -377,6 +387,11 @@ No short candidates (assigned to Sean account).
 - Use variations of same stock across accounts: shares, options, 2x ETF.
 - Always offer alternatives to stock selection and strategy.
 - Consider existing holdings when recommending.
+
+### Rebalancing Frequency
+- **Full portfolio re-score:** Weekly (weekends preferred)
+- **Holdings check:** Daily for positions >$25k or volatile sectors
+- **Trigger-based review:** Immediately after earnings, guidance changes, or 10%+ price moves
 
 ### Strategy Selection Guide
 
