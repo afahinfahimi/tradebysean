@@ -324,12 +324,11 @@ State reason and direction. Use 0 if nothing applies.
 - **Short Candidate:** Score < 30 AND has options AND (Q12 ≤ 1 OR Q20 = -5 OR Q21 = -5 OR Q22 = -5) AND `% Float (Short Interest as % of Float)` < 15%
 - **Avoid:** All others not meeting above criteria
 
-### Tie-Breaker Rules
-When stocks have identical scores, rank by:
-1. Higher Profit% (profitability)
-2. Higher Wtd Alpha (momentum)
-3. Lower Debt/Equity (financial strength)
-4. Higher Market Cap (liquidity/stability)
+### Tier Notes
+- Ranking = pure score. Top 20 = highest 20 scores regardless of tier.
+- Tier = risk cap based on bankruptcy profile (profitability + size).
+- A high-scoring small cap (T2) can rank above a lower-scoring mega cap (T1).
+- Turtle flag: Any tier with '52W %Chg' between -10% and +10% AND '1M %Chg' between -10% and +10% → Turtle
 
 ### Tie-Breaker Rules
 When stocks have identical scores, rank by:
