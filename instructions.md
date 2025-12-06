@@ -69,6 +69,8 @@
 - Short Int %Chg
 - % Float
 
+Note: `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
+
 ### Base Point Questions
 
 **Q1. Sales Growth:** – Fields: `Sales %(a)` and `Sales(q)` vs `Sales(q-4)`
@@ -84,26 +86,28 @@
 * Annual < 0 AND Quarterly ≤ 0 → 0 (Declining)
 
 **Q2. Operating Income Growth:** – Fields: `Oper Income %(a)` and `Oper Income(q)` vs `Oper Income(q-4)`
+* "Annual" = Oper Income %(a) (YoY % from data)
+* "Quarterly" = (Oper Income(q) - Oper Income(q-4)) / Oper Income(q-4) as %
 * Annual ≥50% AND Quarterly > Annual → 5 (Accelerating Exceptional)
-* Annual ≥50% AND Quarterly positive but ≤ Annual → 4 (Steady Exceptional)
+* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 4 (Steady Exceptional)
 * Annual 20-49% AND Quarterly > Annual → 4 (Accelerating Strong)
-* Annual 20-49% AND Quarterly positive but ≤ Annual → 3 (Steady Strong)
-* Annual 1-19% AND Quarterly positive → 2 (Growing)
-* Annual 0% AND Quarterly positive → 1 (Stable)
-* Annual positive AND Quarterly negative → 1 (Decelerating)
-* Annual negative AND Quarterly positive → 1 (Recovering)
-* Annual negative AND Quarterly negative → 0 (Declining)
+* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 3 (Steady Strong)
+* Annual 1-19% AND Quarterly > 0 → 2 (Growing)
+* Annual ≥ 0 AND Quarterly ≤ 0 → 1 (Stalling)
+* Annual < 0 AND Quarterly > 0 → 1 (Recovering)
+* Annual < 0 AND Quarterly ≤ 0 → 0 (Declining)
 
-**Q3. Cash Flow Growth – Fields:** `Cash Flow %(a)` and `Cash Flow(q)` vs `Cash Flow(q-4)`
+**Q3. Cash Flow Growth:** – Fields: `Cash Flow %(a)` and `Cash Flow(q)` vs `Cash Flow(q-4)`
+* "Annual" = Cash Flow %(a) (YoY % from data)
+* "Quarterly" = (Cash Flow(q) - Cash Flow(q-4)) / Cash Flow(q-4) as %
 * Annual ≥50% AND Quarterly > Annual → 5 (Accelerating Exceptional)
-* Annual ≥50% AND Quarterly positive but ≤ Annual → 4 (Steady Exceptional)
+* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 4 (Steady Exceptional)
 * Annual 20-49% AND Quarterly > Annual → 4 (Accelerating Strong)
-* Annual 20-49% AND Quarterly positive but ≤ Annual → 3 (Steady Strong)
-* Annual 1-19% AND Quarterly positive → 2 (Growing)
-* Annual 0% AND Quarterly positive → 1 (Stable)
-* Annual positive AND Quarterly negative → 1 (Decelerating)
-* Annual negative AND Quarterly positive → 1 (Recovering)
-* Annual negative AND Quarterly negative → 0 (Declining)
+* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 3 (Steady Strong)
+* Annual 1-19% AND Quarterly > 0 → 2 (Growing)
+* Annual ≥ 0 AND Quarterly ≤ 0 → 1 (Stalling)
+* Annual < 0 AND Quarterly > 0 → 1 (Recovering)
+* Annual < 0 AND Quarterly ≤ 0 → 0 (Declining)
 
 **Q4. Valuation (P/E TTM)** – Field: `P/E ttm`
 * 1–60 → 4
@@ -219,6 +223,8 @@
 * Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap ≥ $10B → 0 (big company, can survive)
 * Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap < $10B → -5
 
+Note: `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
+
 **Q22. Deterioration Check** – Fields: `Profit%` and `Wtd Alpha`
 * Profit% ≥ -25% → 0 (no penalty)
 * Profit% < -25% AND Wtd Alpha ≥ 0 → 0 (still has momentum)
@@ -249,6 +255,7 @@
 
 ### AI Assessment Sources (Q26-30)
 Use: analyst consensus, recent headlines, insider transactions, SEC filings, and peer comparisons to answer Q26-30. Flag if data is unavailable.
+Default to 0 if data unavailable.
 
 **Q26. Competitive Moat** 
 * Dominant market position, pricing power, high switching costs → +1
@@ -317,6 +324,8 @@ State reason and direction. Use 0 if nothing applies.
 - **Tier 3:** Score ≥ 30 AND Unprofitable (Profit% ≤ 0)
 - **Short Candidate:** Score < 30 AND has options AND (Q12 ≤ -3 OR Q20 = -5 OR Q21 = -5 OR Q22 = -5) AND % Float < 15%
 - **Avoid:** All others not meeting above criteria
+
+Note: `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
 
 ### Tier Notes
 - Ranking = pure score. Top 20 = highest 20 scores regardless of tier.
