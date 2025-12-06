@@ -303,7 +303,7 @@ State reason and direction. Use 0 if nothing applies.
 ---
 
 ## Tier Assignment
-- **Tier 1:** Profitable (Profit% > 10%) AND Market Cap > $50B AND Score ≥ 35 AND Wtd Alpha < 150 AND Country = United States
+- **Tier 1:** Profitable (Profit% > 10%) AND Market Cap > $50B AND Score ≥ 35 AND Wtd Alpha > 0 AND Wtd Alpha < 150 AND Country = United States
 - **Tier 2:** Profitable (Profit% > 0) AND Score ≥ 35 AND NOT Tier 1
 - **Tier 3:** Score 30–34 (any profitability) OR Score ≥ 35 with Profit% ≤ 0
 - **Short Candidate:** Score < 30 AND has options AND (Q12 ≤ 1 OR Q20 = -5 OR Q21 = -5 OR Q22 = -5) AND `% Float (Short Interest as % of Float)` < 15%
