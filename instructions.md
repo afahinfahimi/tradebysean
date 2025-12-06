@@ -18,7 +18,7 @@
 ## Scoring System
 - Find the correct answer for each field (question) and record the corresponding points.
 - Base Points are retrieved from attached CSV files.
-- AI Assessment (Q26-30) and Event-Driven adjustments are applied.
+- AI Assessment and Event-Driven adjustments are applied.
 
 #### Data Validation
 - Before the start of the scoring process, review the CSV files attached...
@@ -62,10 +62,6 @@
 - EPS Growth Prv Yr
 - Market Cap, $K
 - Employees
-- Price/Sales
-- PEG
-- Short Int
-- Short Int %Chg
 - % Float (Short Interest as % of Float)
 
 ### Field Definitions
@@ -116,9 +112,9 @@
 * 101–150 → 2
 * 151–299 → 1
 * 300–400 → 0
-* > 400 → -2
-* 0 (no earnings or exactly breakeven) → -1
-* < 0 (unprofitable) → -1
+* > 400 → -5
+* 0 (no earnings or exactly breakeven) → -2
+* < 0 (unprofitable) → -2
 
 **Q5. Profit Margin** – Field: `Profit%`
 * > 50% → 5 (Exceptional)
@@ -212,10 +208,8 @@
 
 **Q19. Country** – Field: `Country`
 * United States → +1
-* Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → 0
-* Allied/Transparent (Israel, Taiwan, South Korea, Singapore) → 0
-* Emerging (India, Brazil, Mexico, Indonesia, Thailand, Poland) → -2
-* High risk (China, Russia, all others not listed above) → -5
+* Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → -3
+* Other Countries → -5
 
 **Q20. Profitability & Growth Check** – `Fields: Profit%` and `Sales %(a)`
 * Profit% ≥ 0 → 0 (no penalty)
@@ -254,56 +248,43 @@
 * Oils-Energy, Industrial Products, Basic Materials, Transportation, Utilities, Construction → 1
 * Consumer Staples, Consumer Discretionary, Auto-Tires-Trucks, Retail-Wholesale, Medical → 0
 
+**Q26. Operational Efficiency** – Calculate: `Sales(q) × 4 ÷ Employees`
+* > $1M revenue per employee → 2 (Highly efficient)
+* $500k–$1M → 1 (Efficient)
+* < $500k → 0 (Labor intensive)
+
 **End of Base points.**
 
-### AI Assessment (Q26-30)
+### AI Assessment 
 **Required Action:** 
-- Use web search to find analyst consensus, recent headlines, insider transactions, SEC filings, and peer comparisons before scoring Q26-30. 
+- Use web search to find analyst consensus, recent headlines, insider transactions, SEC filings, and peer comparisons before scoring. 
 - Do not default to 0 without attempting research. 
 - Default to 0 only if search returns no relevant data.
 
-**Q26. Competitive Moat** 
+**Q27. Competitive Moat** 
 * Dominant market position, pricing power, high switching costs → +1
 * No moat, commoditized, or facing disruption → -1
 * Neutral → 0
 
-**Q27. Growth Sustainability** 
+**Q28. Growth Sustainability** 
 * Durable drivers (recurring revenue, secular trend, expanding TAM) → +1
 * One-time boost, hype-driven, or decelerating without catalyst → -1
 * Neutral → 0
 
-**Q28. Balance Sheet Quality** 
+**Q29. Balance Sheet Quality** 
 * Fortress (net cash, no debt concerns beyond Q12) → +1
 * Hidden leverage, off-balance-sheet risk, or covenant concerns → -1
 * Neutral → 0
 
-**Q29. Valuation vs Peers** 
+**Q30. Valuation vs Peers** 
 * Trading at discount to comparable peers → +1
 * Extreme premium without justification → -1
 * Neutral → 0
 
-**Q30. Execution & Management** 
+**Q31. Execution & Management** 
 * Proven track record, aligned incentives, strong insider buying → +1
 * Red flags (SEC issues, turnover, meme/squeeze target, controversy) → -1
 * Neutral → 0
-
-**Q31. Price/Sales Ratio** – Field: `Price/Sales`
-* < 2 → +2 (Cheap)
-* 2 to 4.99 → +1 (Reasonable)
-* 5 to 9.99 → 0 (Fair)
-* 10 to 19.99 → -1 (Expensive)
-* ≥ 20 → -2 (Extreme)
-
-**Q32. PEG Ratio** – Field: `PEG`
-* < 1 → +2 (Undervalued vs growth)
-* 1 to 1.99 → +1 (Fair)
-* 2 to 2.99 → 0 (Full)
-* ≥ 3 → -1 (Expensive vs growth)
-* Negative or N/A → 0 (skip)
-
-**Q33. Short Squeeze Risk** – Field: `% Float (Short Interest as % of Float)`
-* < 15% → 0 (Normal — shortable if other criteria met)
-* ≥ 15% → +1 (Squeeze potential for longs; excluded from Short Candidates)
 
 ## Event-Driven Adjustment (±2 points)
 **Required Action:** Search for recent news (earnings, FDA decisions, product launches, executive changes, guidance updates) before assigning 0.
@@ -317,7 +298,7 @@
 State reason and direction. Use 0 if nothing applies.
 
 ## Score Calculation 
-**Formula:** `TOTAL = Base Points (Q1-25) + AI Assessment (Q26-30) + Valuation Adjust (Q31-33) + Event-Driven`
+**Formula:** `TOTAL = Base Points + AI Assessment + Event-Driven`
 
 ---
 
@@ -466,7 +447,7 @@ Trigger: User pastes or uploads current positions, "review my portfolio," "what 
 3. **Holdings Scoring:**
    - Score each holding against CSV data
    - Flag: holdings not in data, tier downgrades, score drops, red flags
-   - Note any AI Assessment (Q26-30) and Event-Driven adjustments
+   - Note any AI Assessment and Event-Driven adjustments
 
 4. **Sell Candidates Table:**
    - Include replacement recommendation for each exit
