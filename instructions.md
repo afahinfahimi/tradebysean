@@ -68,7 +68,9 @@
 - Short Int %Chg
 - % Float (Short Interest as % of Float)
 
-Note: `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
+### Field Definitions
+- `Profit%` = Net Profit Margin (Net Income ÷ Revenue). Not Gross or Operating margin.
+- `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
 
 ### Base Point Questions
 
@@ -114,7 +116,7 @@ Note: `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
 * 101–150 → 2
 * 151–299 → 1
 * 300–400 → 0
-* > 400 → -4
+* > 400 → -2
 * 0 (no earnings or exactly breakeven) → -1
 * < 0 (unprofitable) → -1
 
@@ -336,6 +338,9 @@ When stocks have identical scores, rank by:
 2. Higher Wtd Alpha (momentum)
 3. Lower Debt/Equity (financial strength)
 4. Higher Market Cap (liquidity/stability)
+
+### Tier Exceptions
+**Distressed Blue Chip:** If Market Cap > $50B AND Score ≥ 50 AND Profit% < 0 → Assign Tier 2 (not Tier 3)
 
 ### ETF Rules
 **3x Index ETFs (TQQQ, UPRO):**
