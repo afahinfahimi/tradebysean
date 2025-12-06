@@ -24,6 +24,7 @@
 - Before the start of the scoring process, review the CSV files attached...
 - If no CSV file is attached, alert user and offer to score using web search data (note reduced accuracy).
 
+
 #### Fields
 - Symbol
 - Last
@@ -65,7 +66,7 @@
 - PEG
 - Short Int
 - Short Int %Chg
-- % Float
+- % Float (Short Interest as % of Float)
 
 Note: `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
 
@@ -209,7 +210,7 @@ Note: `Market Cap, $K` is in thousands. $10B threshold = 10,000,000 in raw data.
 * Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → 0
 * Allied/Transparent (Israel, Taiwan, South Korea, Singapore) → 0
 * Emerging (India, Brazil, Mexico, Indonesia, Thailand, Poland) → -2
-* High risk (China, Russia, others not listed above) → -5
+* High risk (China, Russia, all others not listed above) → -5
 
 **Q20. Profitability & Growth Check** – `Fields: Profit%` and `Sales %(a)`
 * Profit% ≥ 0 → 0 (no penalty)
@@ -294,12 +295,9 @@ Default to 0 if data unavailable.
 * Negative or N/A → 0 (skip)
 
 **Q33. Short Squeeze Risk** – Field: `% Float`
-* < 5% → 0 (Normal)
-* 5% to 14.99% → 0 (Elevated - monitor)
-* ≥ 15% → +1 (Squeeze potential for longs; avoid shorting per Short Candidate rule)
+* < 15% → 0 (Normal — shortable if other criteria met)
+* ≥ 15% → +1 (Squeeze potential for longs; excluded from Short Candidates)
   
-Note: % Float ≥ 15% is used as filter in Short Candidate rule, not as score penalty.
-
 ## Event-Driven Adjustment (±2 points)
 For time-sensitive factors not captured in Q1-33:
 - Catalyst (earnings, FDA, product launch, acquisition) → ±1 to ±2
@@ -312,7 +310,7 @@ State reason and direction. Use 0 if nothing applies.
 
 ## Score Calculation 
 **Formula:** `TOTAL = Base Points (Q1-25) + AI Assessment (Q26-30) + Valuation Adjust (Q31-33) + Event-Driven`
-* Max Score: 86
+* Max Score: 89
 * Min Score: -40
 
 ---
