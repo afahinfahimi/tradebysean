@@ -129,9 +129,9 @@
 * < 0% → 0
 
 **Q8. Relative Volume** – Calculate: `Volume ÷ 20D Avg Vol`
-* > 1.51× → 3
-* 1.0–1.5× → 2
-* 0.81–1.0× → 1
+* ≥ 1.5× → 3
+* 1.0–1.49× → 2
+* 0.8–0.99× → 1
 * < 0.8× → 0
 
 **Q9. Price vs Moving Averages** – Compare: `Last` vs `50D MA` vs `200D MA`
@@ -234,34 +234,50 @@
 * Oils-Energy, Industrial Products, Basic Materials, Transportation, Utilities, Construction → 1
 * Consumer Staples, Consumer Discretionary, Auto-Tires-Trucks, Retail-Wholesale, Medical → 0
 
+**End of Base points.**
+
+### AI Assessment Sources (Q26-30)
+Use: analyst consensus, recent headlines, insider transactions, SEC filings, and peer comparisons to answer Q26-30. Flag if data is unavailable.
+
+**Q26. Competitive Moat** 
+* Dominant market position, pricing power, high switching costs → +1
+* No moat, commoditized, or facing disruption → -1
+* Neutral → 0
+
+**Q27. Growth Sustainability** 
+* Durable drivers (recurring revenue, secular trend, expanding TAM) → +1
+* One-time boost, hype-driven, or decelerating without catalyst → -1
+* Neutral → 0
+
+**Q28. Balance Sheet Quality** 
+* Fortress (net cash, no debt concerns beyond Q12) → +1
+* Hidden leverage, off-balance-sheet risk, or covenant concerns → -1
+* Neutral → 0
+
+**Q29. Valuation vs Peers** 
+* Trading at discount to comparable peers → +1
+* Extreme premium without justification → -1
+* Neutral → 0
+
+**Q30. Execution & Management** 
+* Proven track record, aligned incentives, strong insider buying → +1
+* Red flags (SEC issues, turnover, meme/squeeze target, controversy) → -1
+* Neutral → 0
+
+## Event-Driven Adjustment (±2 points)
+For time-sensitive factors not captured in Q1-30:
+- Catalyst (earnings, FDA, product launch, acquisition) → ±1 to ±2
+- After-hours/pre-market move → ±1
+- Restructuring/layoffs (efficiency vs. distress) → ±1
+- Turnaround inflection point → +1
+- Imminent negative event (lockup expiry, debt maturity) → -1 to -2
+
+State reason and direction. Use 0 if nothing applies.
+
 ## Score Calculation 
-
-**Formula:** `TOTAL = Base Point (Q1-25)`
-* Max Score: 74 (before negative deductions)
-* Min Score: -31 (if all penalties apply)
-
-## AI Discretionary Adjustment (+/- 5 points)
-AI may adjust final score by up to 5 points based on other sources available to ai agent.
-
-### Rules:
-- Max adjustment: 5 points
-- State reasons for every adjustment
-- Even if there are multiple reasons for adjustment, the total is limited to (+/- 5)
-
-### Positive adjustment examples:
-- Strong CEO/leadership
-- Multiple products/revenue streams
-- Upcoming catalyst (product launch, FDA approval)
-- Moat/competitive advantage
-- Company turnaround with clear path
-- After-hour or pre-market price movement
-
-### Negative adjustment examples:
-- Meme stock / irrational trading patterns
-- SEC investigation / fraud concerns
-- CEO or top executives controversy
-- Squeeze target (high short interest manipulation)
-- After-hour or pre-market price movement
+**Formula:** `TOTAL = Base Points (Q1-25) + AI Assessment (Q26-30) + Event-Driven`
+* Max Score: 81
+* Min Score: -38
 
 ---
 
