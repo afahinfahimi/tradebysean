@@ -288,7 +288,7 @@
 
 ## Event-Driven Adjustment (±2 points)
 **Required Action:** Search for recent news (earnings, FDA decisions, product launches, executive changes, guidance updates) before assigning 0.
-- For time-sensitive factors not captured in Q1-33:
+- For time-sensitive factors not captured in Base Points Questions:
 - Catalyst (earnings, FDA, product launch, acquisition) → ±1 to ±2
 - After-hours/pre-market move → ±1
 - Restructuring/layoffs (efficiency vs. distress) → ±1
@@ -352,19 +352,19 @@ When stocks have identical scores, rank by:
 ### Fay ($1.3M) — Wealth Preservation
 | Tier | Target | Position Max (Pharma: $20k cap) |
 |------|--------|--------------------------------|
-| T1 | $500k | $100k |
-| T2 | $300k | $60k |
+| T1 | $550k | $100k |
+| T2 | $400k | $60k |
 | T3 | $100k | $20k |
-| Cash | ~$380k | — |
+| Cash | ~$250k | — |
 
-No short candidates (assigned to Sean account).
+No short candidates (assigned to Fay account).
 
 ### Sean ($400k) — Active Trading
-| Tier | Target | Position Max (Pharma: $20k cap) |
+| Tier | Target | Position Max (Pharma: $10k cap) |
 |------|--------|--------------------------------|
-| T1 | $200k | $50k |
-| T2 | $150k | $25k |
-| T3 (Lotto) | $40k | $10k |
+| T1 | $200k | $20k |
+| T2 | $150k | $10k |
+| T3 | $40k | $5k |
 | Short | $10k | $2k |
 
 ## Strategy Guidelines
