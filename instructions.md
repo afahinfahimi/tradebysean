@@ -63,6 +63,11 @@
 - EPS Growth Prv Yr
 - Market Cap, $K
 - Employees
+- Price/Sales
+- PEG
+- Short Int
+- Short Int %Chg
+- % Float
 
 ### Base Point Questions
 
@@ -196,9 +201,12 @@
 * Yes → 1
 * No → 0
 
-**Q19. Country**  – Field: `Country`
-* United States of America → 1
-* Other → -5
+**Q19. Country** – Field: `Country`
+* United States → +1
+* Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan) → 0
+* Allied/Transparent (Israel, Taiwan, South Korea, Singapore) → 0
+* Emerging with risk (India, Brazil, Mexico) → -2
+* High risk (China, Russia, others) → -5
 
 **Q20. Profitability & Growth Check** – `Fields: Profit%` and `Sales %(a)`
 * Profit% ≥ 0 → 0 (no penalty)
@@ -267,6 +275,25 @@ Use: analyst consensus, recent headlines, insider transactions, SEC filings, and
 * Red flags (SEC issues, turnover, meme/squeeze target, controversy) → -1
 * Neutral → 0
 
+**Q31. Price/Sales Ratio** – Field: `Price/Sales`
+* < 2 → +2 (Cheap)
+* 2 to 4.99 → +1 (Reasonable)
+* 5 to 9.99 → 0 (Fair)
+* 10 to 19.99 → -1 (Expensive)
+* ≥ 20 → -2 (Extreme)
+
+**Q32. PEG Ratio** – Field: `PEG`
+* < 1 → +2 (Undervalued vs growth)
+* 1 to 1.99 → +1 (Fair)
+* 2 to 2.99 → 0 (Full)
+* ≥ 3 → -1 (Expensive vs growth)
+* Negative or N/A → 0 (skip)
+
+**Q33. Short Squeeze Risk** – Field: `% Float`
+* < 5% → 0 (Normal)
+* 5% to 14.99% → 0 (Elevated - monitor)
+* ≥ 15% → -1 (Squeeze risk — avoid shorting)
+
 ## Event-Driven Adjustment (±2 points)
 For time-sensitive factors not captured in Q1-30:
 - Catalyst (earnings, FDA, product launch, acquisition) → ±1 to ±2
@@ -278,9 +305,9 @@ For time-sensitive factors not captured in Q1-30:
 State reason and direction. Use 0 if nothing applies.
 
 ## Score Calculation 
-**Formula:** `TOTAL = Base Points (Q1-25) + AI Assessment (Q26-30) + Event-Driven`
-* Max Score: 81
-* Min Score: -36
+**Formula:** `TOTAL = Base Points (Q1-25) + AI Assessment (Q26-30) + Event-Driven + Valuation Adjust (Q31-33)`
+* Max Score: 85
+* Min Score: -40
 
 ---
 
@@ -288,7 +315,7 @@ State reason and direction. Use 0 if nothing applies.
 - **Tier 1:** Profitable (Profit% > 0) AND Market Cap > $10B AND Score ≥ 35
 - **Tier 2:** Profitable (Profit% > 0) AND Market Cap ≤ $10B AND Score ≥ 35
 - **Tier 3:** Score ≥ 30 AND Unprofitable (Profit% ≤ 0)
-- **Short Candidate:** Score < 30 AND has options AND (Q12 ≤ -3 OR Q20 = -5 OR Q21 = -5 OR Q22 = -5)
+- **Short Candidate:** Score < 30 AND has options AND (Q12 ≤ -3 OR Q20 = -5 OR Q21 = -5 OR Q22 = -5) AND % Float < 15%
 - **Avoid:** All others not meeting above criteria
 
 ### Tier Notes
