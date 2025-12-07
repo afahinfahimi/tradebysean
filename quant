@@ -1,88 +1,134 @@
 # Trading by Sean - QuantConnect Scoring System
-**Version 7.0 — Simplified Implementation**
+**Version 7.0 — 12/7/2025**
 
 ## Overview
-A bare-bones scoring system designed for QuantConnect's available data fields. This is a simplified version of the full V21 system, focusing on technical momentum and basic fundamentals.
+A scoring system designed for QuantConnect's available data fields, focusing on technical momentum and fundamental quality metrics available through Morningstar data.
+
+**Max Score: 37 points** (for US stocks)
 
 ---
 
-## Scoring Questions
+## Fields
+- Symbol
+- Last
+- 50D MA
+- 200D MA
+- 10D %Chg
+- 1M %Chg
+- 3M %Chg
+- 52W %Chg
+- 20D Avg Vol
+- Volume
+- P/E ttm
+- Profit%
+- ROE%
+- ROA%
+- Debt/Equity
+- Country
 
-**Max Score: 27 points**
+### Field Definitions
+- `Last` = Most recent closing price
+- `50D MA` = 50-Day Simple Moving Average
+- `200D MA` = 200-Day Simple Moving Average
+- `10D %Chg` = 10-Day Percent Change in Price
+- `1M %Chg` = 1-Month (21 trading days) Percent Change in Price
+- `3M %Chg` = 3-Month (63 trading days) Percent Change in Price
+- `52W %Chg` = 52-Week (252 trading days) Percent Change in Price
+- `20D Avg Vol` = 20-Day Average Volume
+- `Volume` = Most recent daily volume
+- `P/E ttm` = Price-to-Earnings Ratio (Trailing Twelve Months)
+- `Profit%` = Net Profit Margin (Net Income ÷ Revenue)
+- `ROE%` = Return on Equity
+- `ROA%` = Return on Assets
+- `Debt/Equity` = Total Debt ÷ Shareholders' Equity
+- `Country` = Country of incorporation
 
-### Technical / Price-Based (17 points max)
+---
 
-**Q4. Trend Following (Last Price Above/Below 50-Day Moving Average)** — Compare: `Last` (Last Price) vs `50D MA` (50-Day Moving Average)
-* Last > 50D MA → 3
-* Last ≤ 50D MA → 0
+## Base Point Questions
 
-**Q5. Long-Term Trend (Last price Above/Below 200-Day Moving Average)** — Compare: `Last` (Last Price) vs `200D MA` (200-Day Moving Average)
-* Last > 200D MA → 3
-* Last ≤ 200D MA → 0
+**Q1. Valuation (P/E TTM)** — Field: `P/E ttm`
+* 1 to 60 → 4
+* 61 to 100 → 3
+* 101 to 150 → 2
+* 151 to 299 → 1
+* 300 to 400 → 0
+* > 400 → -5
+* 0 (no earnings or exactly breakeven) → -2
+* < 0 (unprofitable) → -2
 
-**Q6. Recent Momentum** — Field: `1M %Chg` (1-Month Percent Change)
-* > 0% → 2
-* ≤ 0% → 0
+**Q2. Profit Margin** — Field: `Profit%`
+* > 50% → 5 (Exceptional)
+* 30% to 50% → 4 (Strong)
+* 15% to < 30% → 3 (Good)
+* 5% to < 15% → 2 (Moderate)
+* 0% to < 5% → 1 (Marginal)
+* < 0% → 0 (Unprofitable)
 
-**Q7. Medium-Term Momentum** — Field: `3M %Chg` (3-Month Percent Change)
-* > 0% → 2
-* ≤ 0% → 0
+**Q3. 1-Month % Change** — Field: `1M %Chg`
+* > 10% → 3
+* 5% to 10% → 2
+* 0% to < 5% → 1
+* < 0% → 0
 
-**Q8. Long-Term Momentum (52-Week Price Change)** — Field: `52W %Chg` (52-Week Percent Change)
-* > 0% → 3
-* ≤ 0% → 0
+**Q4. 10-Day % Change** — Field: `10D %Chg`
+* ≥ 15% → 3
+* 5% to < 15% → 2
+* 0% to < 5% → 1
+* < 0% → 0
 
-**Q9. Volume Spike (Current vs Average Volume)** — Calculate: `Volume` (Today's Volume) ÷ `20D Avg Vol` (20-Day Average Volume)
-* Volume > 20D Avg Vol → 2
-* Volume ≤ 20D Avg Vol → 0
+**Q5. Relative Volume** — Calculate: `Volume` ÷ `20D Avg Vol`
+* ≥ 1.5× → 3
+* 1.0 to < 1.5× → 2
+* 0.8 to < 1.0× → 1
+* < 0.8× → 0
 
-**Q10. Short-Term Momentum (10-Day Price Change)** — Field: `10D %Chg` (10-Day Percent Change)
-* > 0% → 2
-* ≤ 0% → 0
+**Q6. Price vs Moving Averages** — Compare: `Last` vs `50D MA` vs `200D MA`
+* Above both (Last > 50D AND Last > 200D) → 3
+* Above one → 2
+* Below both → 0
 
-### Fundamental (10 points max)
+**Q7. 20-Day Avg Volume** — Field: `20D Avg Vol`
+* ≥ 1M → 3
+* 500k to < 1M → 2
+* 200k to < 500k → 1
+* < 200k → 0
 
-**Q12. Profitability (Net Profit Margin)** — Field: `Profit%` (Net Profit Margin = Net Income ÷ Revenue)
-* > 0% → 3
-* ≤ 0% → 0
+**Q8. Debt/Equity** — Field: `Debt/Equity`
+* < 0 (Negative Equity) → -10
+* ≥ 3.0 → -5
+* 1.5 to < 3.0 → 1
+* 0.5 to < 1.5 → 2
+* 0 to < 0.5 → 3
 
-**Q15. Shareholder Value (Return on Equity)** — Field: `ROE%` (Return on Equity)
+**Q9. ROE%** — Field: `ROE%`
+* > 20% → 3
+* 10% to 20% → 2
+* 5% to < 10% → 1
+* < 5% → 0
+
+**Q10. Return on Assets** — Field: `ROA%`
 * > 15% → 3
-* ≤ 15% → 0
+* 10% to 15% → 2
+* 5% to < 10% → 1
+* < 5% → 0
 
-**Q16. Asset Efficiency (Return on Assets)** — Field: `ROA%` (Return on Assets)
-* > 5% → 2
-* ≤ 5% → 0
+**Q11. Country** — Field: `Country`
+* United States → +1
+* Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → -5
+* Other Countries → -8
 
-**Q23. Balance Sheet Health (Debt-to-Equity Ratio)** — Field: `Debt/Equity` (Total Debt ÷ Shareholders' Equity)
-* < 1.5 → 2
-* ≥ 1.5 → 0
+**Q12. Trend Consistency** — Fields: `3M %Chg` and `52W %Chg`
+* Both > 0 → 3 (Positive trend)
+* Only one > 0 → 1 (Mixed)
+* Both ≤ 0 → 0 (Downtrend)
+
+**End of Base Points.**
 
 ---
 
-## Data Sources
-
-### Price Data (from History)
-| Field | Calculation |
-|-------|-------------|
-| Last | `close` from most recent bar |
-| 50D MA | Mean of last 50 closes |
-| 200D MA | Mean of last 200 closes |
-| 10D %Chg | `(Last - close[10]) / close[10] * 100` |
-| 1M %Chg | `(Last - close[21]) / close[21] * 100` |
-| 3M %Chg | `(Last - close[63]) / close[63] * 100` |
-| 52W %Chg | `(Last - close[252]) / close[252] * 100` |
-| Volume | `volume` from most recent bar |
-| 20D Avg Vol | Mean of last 20 volume bars |
-
-### Fundamental Data (from Morningstar via QuantConnect)
-| Field | Source |
-|-------|--------|
-| P/E | `valuationratios.PERatio` |
-| Profit% | `operationratios.NetMargin * 100` |
-| ROE% | `operationratios.ROE * 100` |
-| ROA% | `operationratios.ROA * 100` |
-| Debt/Equity | `operationratios.LongTermDebtEquityRatio` |
+## Score Calculation
+**Formula:** `TOTAL = Sum of all Base Points`
 
 ---
 
@@ -90,11 +136,38 @@ A bare-bones scoring system designed for QuantConnect's available data fields. T
 
 | Score Range | Assessment |
 |-------------|------------|
-| 22-27 | Strong — Full momentum + solid fundamentals |
-| 17-21 | Good — Most indicators positive |
-| 12-16 | Mixed — Some weakness present |
-| 7-11 | Weak — Multiple red flags |
-| 0-6 | Avoid — Failing most criteria |
+| 31–37 | Strong — Full momentum + solid fundamentals |
+| 25–30 | Good — Most indicators positive |
+| 18–24 | Mixed — Some weakness present |
+| 10–17 | Weak — Multiple red flags |
+| < 10 | Avoid — Failing most criteria |
+
+---
+
+## Data Sources
+
+### Price Data (from QuantConnect History)
+| Field | Calculation |
+|-------|-------------|
+| Last | `close` from most recent bar |
+| 50D MA | Mean of last 50 closes |
+| 200D MA | Mean of last 200 closes |
+| 10D %Chg | `(Last - close[-10]) / close[-10] × 100` |
+| 1M %Chg | `(Last - close[-21]) / close[-21] × 100` |
+| 3M %Chg | `(Last - close[-63]) / close[-63] × 100` |
+| 52W %Chg | `(Last - close[-252]) / close[-252] × 100` |
+| Volume | `volume` from most recent bar |
+| 20D Avg Vol | Mean of last 20 volume bars |
+
+### Fundamental Data (from Morningstar via QuantConnect)
+| Field | Source |
+|-------|--------|
+| P/E ttm | `valuationratios.PERatio` |
+| Profit% | `operationratios.NetMargin × 100` |
+| ROE% | `operationratios.ROE × 100` |
+| ROA% | `operationratios.ROA × 100` |
+| Debt/Equity | `operationratios.TotalDebtEquityRatio` |
+| Country | `companyprofile.CountryId` |
 
 ---
 
@@ -111,51 +184,6 @@ return float(match.group(1)) if match else None
 * Skip question if data unavailable (score 0, not penalty)
 * Fundamental data may lag price data by 1-2 quarters
 
-### Limitations vs Full V21
-This system omits:
-* Q1-Q3: Sales/OpIncome/CashFlow growth (quarterly data not available)
-* Q11: Ownership & Coverage
-* Q13: Weighted Alpha
-* Q14: EPS Growth
-* Q17: Range Position (support/resistance)
-* Q18: Options availability
-* Q19: Country penalty
-* Q20-Q22: Risk penalty questions
-
 ---
 
-## QuantConnect Python Template
-
-```python
-from datetime import datetime, timedelta
-import pandas as pd
-import re
-
-def parse_timeseries(value_str):
-    if not value_str or str(value_str) == "NaN":
-        return None
-    try:
-        match = re.search(r'1Y:([^;]+)', str(value_str))
-        return float(match.group(1)) if match else None
-    except:
-        return None
-
-def score_stock(symbol_str, target_date, qb):
-    score = 0
-    breakdown = {}
-    
-    # Get data
-    history = qb.History([symbol_str], target_date - timedelta(days=252),
-                         target_date + timedelta(days=1), Resolution.Daily)
-    fund_hist = qb.History(Fundamental, [symbol_str], target_date,
-                          target_date + timedelta(days=1))
-    
-    # Extract and score...
-    # (See full implementation)
-    
-    return {'Symbol': symbol_str, 'Score': score, 'Breakdown': breakdown}
-```
-
----
-
-**END OF DOCUMENT**
+**END OF INSTRUCTIONS**
