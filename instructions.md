@@ -230,15 +230,14 @@
 * Only one > 0 → 1
 * Both ≤ 0 → 0
 
-**Q25. Sector Preference** — Field: `Sector`
-
+**Q24. Sector Preference** — Field: `Sector`
 * Computers and Technology → 4
 * Aerospace, Defence → 3
 * Finance, Business Services → 2
 * Oils-Energy, Industrial Products, Basic Materials, Transportation, Utilities, Construction → 1
 * Consumer Staples, Consumer Discretionary, Auto-Tires-Trucks, Retail-Wholesale, Medical → 0
 
-**Q26. Operational Efficiency** – Calculate: `Sales(q) × 4 ÷ Employees`
+**Q25. Operational Efficiency** – Calculate: `Sales(q) × 4 ÷ Employees`
 * > $1M revenue per employee → 2 (Highly efficient)
 * $500k–$1M → 1 (Efficient)
 * < $500k → 0 (Labor intensive)
@@ -251,27 +250,27 @@
 - Do not default to 0 without attempting research. 
 - Default to 0 only if search returns no relevant data.
 
-**Q27. Competitive Moat** 
+**Q26. Competitive Moat** 
 * Dominant market position, pricing power, high switching costs → +1
 * No moat, commoditized, or facing disruption → -1
 * Neutral → 0
 
-**Q28. Growth Sustainability** 
+**Q27. Growth Sustainability** 
 * Durable drivers (recurring revenue, secular trend, expanding TAM) → +1
 * One-time boost, hype-driven, or decelerating without catalyst → -1
 * Neutral → 0
 
-**Q29. Balance Sheet Quality** 
+**Q28. Balance Sheet Quality** 
 * Fortress (net cash, no debt concerns beyond Q12) → +1
 * Hidden leverage, off-balance-sheet risk, or covenant concerns → -1
 * Neutral → 0
 
-**Q30. Valuation vs Peers** 
+**Q29. Valuation vs Peers** 
 * Trading at discount to comparable peers → +1
 * Extreme premium without justification → -1
 * Neutral → 0
 
-**Q31. Execution & Management** 
+**Q30. Execution & Management** 
 * Proven track record, aligned incentives, strong insider buying → +1
 * Red flags (SEC issues, turnover, meme/squeeze target, controversy) → -1
 * Neutral → 0
@@ -293,16 +292,16 @@ State reason and direction. Use 0 if nothing applies.
 ---
 
 ## Tier Assignment
-- **Tier 1:** Score ≥ 50 AND 'Profit%' > 0
-- **Tier 2:** Score 36–49 AND 'Profit%' > 0
-**Tier 3:** Score 35-39 (or Score ≥40 with Profit% ≤0) AND at least ONE of:
-  - Sales(q) > Sales(q-4)
-  - Oper Income(q) > Oper Income(q-4)
-  - Cash Flow(q) > Cash Flow(q-4)
+- **Tier 1:** Score > 49 AND Profit% > 0
+- **Tier 2:** Score 35–49 AND Profit% > 0
+- **Tier 3:** Score ≥35 AND Profit% ≤ 0 AND at least ONE of:
+   - Sales(q) > Sales(q-4)
+   - Oper Income(q) > Oper Income(q-4)
+   - Cash Flow(q) > Cash Flow(q-4)
 - **Short Candidate:** Score <35 AND 1M Put OI >10,000 AND % Float <15%
-- **Avoid:** Score < 35 and is not a Short Candidate
-- **Turtle:** Any tier with '52W %Chg' between -10% and +10% AND '1M %Chg' between -10% and +10%
-
+- **Avoid:** Score <35 (and not Short), OR Score ≥35 unprofitable with NO quarterly growth
+- **Turtle:** Any tier with 52W %Chg between -10% and +10% AND 1M %Chg between -10% and +10%
+- 
 ### Tier Notes
 Tiers are risk caps, not quality rankings. Score determines rank; tier determines position size. Report next to score.
 
@@ -451,36 +450,6 @@ Trigger: User pastes or uploads current positions, "review my portfolio," "what 
 | VST | 24 | Momentum broken | Sell now | CDE (56) |
 
 **Priority:** 🚨 Exit ORCL/VST → ⚠️ Add LLY/CDE → 💡 Build T3
-
----
-
-**Master Plan:**
-
-🚨 **Urgent:**
-- Exit ORCL after 12/26 call expires (+$20k cash)
-- Sell VST now (+$9k cash)
-
-⚠️ **Desired:**
-- Sell NET, redeploy to UBER
-- Open T2 position: LLY $20k (Healthcare diversification)
-- Open T2 position: CDE $15k (Materials hedge)
-
-💡 **Optional:**
-- Add to GOOGL (highest-scoring mega cap, score 62)
-- Start T3 position: CRDO $20k (high-growth Tech, score 59)
-
----
-
-**Headlines (Holdings >$5k):**
-
-| Symbol | News | Impact |
-|--------|------|--------|
-| NVDA | Blackwell different China version in development; H20 China chip faces restrictions | Mixed |
-| APP | Q3 beat, raised guidance, ad platform outperforming | Positive |
-| ORCL | Cloud growth decelerated to 22%; lost $10B DoD contract to AWS | Negative |
-| AVGO | VMware integration ahead of schedule; AI revenue +220% YoY | Positive |
-| TQQQ | Nasdaq at ATH, but RSI overbought at 71 | Caution |
-| META | Instagram Reels monetization improving; TikTok ban catalyst | Positive |
 
 ### Mode 3: Single Stock Deep Dive
 Trigger: "What do think about  AAPL?" or specific ticker question
