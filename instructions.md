@@ -71,40 +71,36 @@
 ### Base Point Questions
 
 **Q1. Sales Growth:** – Fields: `Sales %(a)` and `Sales(q)` vs `Sales(q-4)`
-* "Annual" = Sales %(a) (YoY % from data)
-* "Quarterly" = (Sales(q) - Sales(q-4)) / Sales(q-4) as %
-* Annual ≥50% AND Quarterly > Annual → 5 (Accelerating Exceptional)
-* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 4 (Steady Exceptional)
-* Annual 20-49% AND Quarterly > Annual → 4 (Accelerating Strong)
-* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 3 (Steady Strong)
+* Annual ≥50% AND Quarterly > Annual → 6 (Accelerating Exceptional)
+* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 5 (Steady Exceptional)
+* Annual 20-49% AND Quarterly > Annual → 5 (Accelerating Strong)
+* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 4 (Steady Strong)
 * Annual 1-19% AND Quarterly > 0 → 2 (Growing)
 * Annual ≥ 0 AND Quarterly ≤ 0 → 1 (Stalling)
 * Annual < 0 AND Quarterly > 0 → 1 (Recovering)
 * Annual < 0 AND Quarterly ≤ 0 → 0 (Declining)
 
 **Q2. Operating Income Growth:** – Fields: `Oper Income %(a)` and `Oper Income(q)` vs `Oper Income(q-4)`
-* "Annual" = Oper Income %(a) (YoY % from data)
-* "Quarterly" = (Oper Income(q) - Oper Income(q-4)) / Oper Income(q-4) as %
-* Annual ≥50% AND Quarterly > Annual → 5 (Accelerating Exceptional)
-* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 4 (Steady Exceptional)
-* Annual 20-49% AND Quarterly > Annual → 4 (Accelerating Strong)
-* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 3 (Steady Strong)
+* Annual ≥50% AND Quarterly > Annual → 6 (Accelerating Exceptional)
+* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 5 (Steady Exceptional)
+* Annual 20-49% AND Quarterly > Annual → 5 (Accelerating Strong)
+* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 4 (Steady Strong)
 * Annual 1-19% AND Quarterly > 0 → 2 (Growing)
 * Annual ≥ 0 AND Quarterly ≤ 0 → 1 (Stalling)
 * Annual < 0 AND Quarterly > 0 → 1 (Recovering)
 * Annual < 0 AND Quarterly ≤ 0 → 0 (Declining)
 
+
 **Q3. Cash Flow Growth:** – Fields: `Cash Flow %(a)` and `Cash Flow(q)` vs `Cash Flow(q-4)`
-* "Annual" = Cash Flow %(a) (YoY % from data)
-* "Quarterly" = (Cash Flow(q) - Cash Flow(q-4)) / Cash Flow(q-4) as %
-* Annual ≥50% AND Quarterly > Annual → 5 (Accelerating Exceptional)
-* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 4 (Steady Exceptional)
-* Annual 20-49% AND Quarterly > Annual → 4 (Accelerating Strong)
-* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 3 (Steady Strong)
+* Annual ≥50% AND Quarterly > Annual → 6 (Accelerating Exceptional)
+* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 5 (Steady Exceptional)
+* Annual 20-49% AND Quarterly > Annual → 5 (Accelerating Strong)
+* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 4 (Steady Strong)
 * Annual 1-19% AND Quarterly > 0 → 2 (Growing)
 * Annual ≥ 0 AND Quarterly ≤ 0 → 1 (Stalling)
 * Annual < 0 AND Quarterly > 0 → 1 (Recovering)
 * Annual < 0 AND Quarterly ≤ 0 → 0 (Declining)
+
 
 **Q4. Valuation (P/E TTM)** – Field: `P/E ttm`
 * 1–60 → 4
@@ -161,11 +157,32 @@
 * # Analysts > 5 → +1
 
 **Q12. Debt/Equity** – Field: `Debt/Equity`
-* < 0 (Negative Equity) → -5
-* ≥ 3.0 → -3
+* < 0 (Negative Equity) → -10
+* ≥ 3.0 → -5
 * 1.5 to 2.99 → 1
 * 0.5 to 1.49 → 2
 * 0 to 0.49 → 3
+
+**Q19. Country** – Field: `Country`
+* United States → +1
+* Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → -5
+* Other Countries → -8
+
+**Q20. Profitability & Growth Check** – Fields: `Profit%` and `Sales %(a)`
+* Profit% ≥ 0 → 0 (no penalty)
+* Profit% < 0 AND Sales %(a) ≥ 25% → 0 (growing fast, acceptable loss)
+* Profit% < 0 AND Sales %(a) < 25% → -10
+
+**Q21. Cash Burn Risk** – Fields: `Profit%`, `Cash Flow(q)`, `Market Cap, $K`
+* Profit% ≥ 0 → 0 (no penalty)
+* Profit% < 0 AND Cash Flow(q) ≥ 0 → 0 (no penalty)
+* Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap ≥ $10B → 0 (big company, can survive)
+* Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap < $10B → -15
+
+**Q22. Deterioration Check** – Fields: `Profit%` and `Wtd Alpha`
+* Profit% ≥ -25% → 0 (no penalty)
+* Profit% < -25% AND Wtd Alpha ≥ 0 → 0 (still has momentum)
+* Profit% < -25% AND Wtd Alpha < 0 → -10
 
 **Q13. Weighted Alpha** – Field: `Wtd Alpha`
 * > 80 → 3
@@ -208,24 +225,24 @@
 
 **Q19. Country** – Field: `Country`
 * United States → +1
-* Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → -3
-* Other Countries → -5
+* Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → -5
+* Other Countries → -8
 
-**Q20. Profitability & Growth Check** – `Fields: Profit%` and `Sales %(a)`
+**Q20. Profitability & Growth Check** – Fields: `Profit%` and `Sales %(a)`
 * Profit% ≥ 0 → 0 (no penalty)
 * Profit% < 0 AND Sales %(a) ≥ 25% → 0 (growing fast, acceptable loss)
-* Profit% < 0 AND Sales %(a) < 25% → -5
+* Profit% < 0 AND Sales %(a) < 25% → -10
 
 **Q21. Cash Burn Risk** – Fields: `Profit%`, `Cash Flow(q)`, `Market Cap, $K`
 * Profit% ≥ 0 → 0 (no penalty)
 * Profit% < 0 AND Cash Flow(q) ≥ 0 → 0 (no penalty)
 * Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap ≥ $10B → 0 (big company, can survive)
-* Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap < $10B → -5
+* Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap < $10B → -15
 
 **Q22. Deterioration Check** – Fields: `Profit%` and `Wtd Alpha`
 * Profit% ≥ -25% → 0 (no penalty)
 * Profit% < -25% AND Wtd Alpha ≥ 0 → 0 (still has momentum)
-* Profit% < -25% AND Wtd Alpha < 0 → -5
+* Profit% < -25% AND Wtd Alpha < 0 → -10
 
 **Q23. Trend Consistency** – Fields: `3M %Chg` and `52W %Chg`
 * Both > 0 AND 52W ≥ 3M (steady climb) → 3
