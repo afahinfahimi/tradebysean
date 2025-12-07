@@ -63,6 +63,7 @@
 - Market Cap, $K
 - Employees
 - % Float (Short Interest as % of Float)
+- 1M Put OI
 
 ### Field Definitions
 - `Profit%` = Net Profit Margin (Net Income ÷ Revenue). Not Gross or Operating margin.
@@ -163,27 +164,6 @@
 * 0.5 to 1.49 → 2
 * 0 to 0.49 → 3
 
-**Q19. Country** – Field: `Country`
-* United States → +1
-* Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → -5
-* Other Countries → -8
-
-**Q20. Profitability & Growth Check** – Fields: `Profit%` and `Sales %(a)`
-* Profit% ≥ 0 → 0 (no penalty)
-* Profit% < 0 AND Sales %(a) ≥ 25% → 0 (growing fast, acceptable loss)
-* Profit% < 0 AND Sales %(a) < 25% → -10
-
-**Q21. Cash Burn Risk** – Fields: `Profit%`, `Cash Flow(q)`, `Market Cap, $K`
-* Profit% ≥ 0 → 0 (no penalty)
-* Profit% < 0 AND Cash Flow(q) ≥ 0 → 0 (no penalty)
-* Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap ≥ $10B → 0 (big company, can survive)
-* Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap < $10B → -15
-
-**Q22. Deterioration Check** – Fields: `Profit%` and `Wtd Alpha`
-* Profit% ≥ -25% → 0 (no penalty)
-* Profit% < -25% AND Wtd Alpha ≥ 0 → 0 (still has momentum)
-* Profit% < -25% AND Wtd Alpha < 0 → -10
-
 **Q13. Weighted Alpha** – Field: `Wtd Alpha`
 * > 80 → 3
 * 40–79 → 2
@@ -250,13 +230,6 @@
 * Only one > 0 → 1
 * Both ≤ 0 → 0
 
-**Q24. Financial Strength** — Fields: `Profit%`, `ROE%`, `Debt/Equity`
-
-* Profit% ≥ 20% AND ROE ≥ 20% AND Debt/Equity < 0.5 → 3 (Fortress)
-* Profit% ≥ 15% AND ROE ≥ 15% AND Debt/Equity < 1.0 → 2 (Strong)
-* Profit% ≥ 10% AND ROE ≥ 10% AND Debt/Equity < 1.5 → 1 (Adequate)
-* Otherwise → 0
-
 **Q25. Sector Preference** — Field: `Sector`
 
 * Computers and Technology → 4
@@ -320,27 +293,18 @@ State reason and direction. Use 0 if nothing applies.
 ---
 
 ## Tier Assignment
-- **Tier 1:** Score ≥ 50 AND Profit% > 0
-- **Tier 2:** Score 40–49 AND Profit% > 0
-- **Tier 3:** Score 35–39, OR Score ≥ 40 with Profit% ≤ 0
-- **Short Candidate:** Score < 30 AND has options AND (Q12 ≤ 1 OR Q20 = -5 OR Q21 = -5 OR Q22 = -5) AND `% Float` < 15%
-- **Avoid:** Score < 35 (unless Short)
+- **Tier 1:** Score ≥ 50 AND 'Profit%' > 0
+- **Tier 2:** Score 36–49 AND 'Profit%' > 0
+**Tier 3:** Score 35-39 (or Score ≥40 with Profit% ≤0) AND at least ONE of:
+  - Sales(q) > Sales(q-4)
+  - Oper Income(q) > Oper Income(q-4)
+  - Cash Flow(q) > Cash Flow(q-4)
+- **Short Candidate:** Score <35 AND 1M Put OI >10,000 AND % Float <15%
+- **Avoid:** Score < 35 and is not a Short Candidate
+- **Turtle:** Any tier with '52W %Chg' between -10% and +10% AND '1M %Chg' between -10% and +10%
 
 ### Tier Notes
-- Ranking = pure score. Top 20 = highest 20 scores regardless of tier.
-- Tier = risk cap based on bankruptcy profile (profitability + size).
-- A high-scoring small cap (T2) can rank above a lower-scoring mega cap (T1).
-- Turtle flag: Any tier with '52W %Chg' between -10% and +10% AND '1M %Chg' between -10% and +10% → Turtle
-
-### Tie-Breaker Rules
-When stocks have identical scores, rank by:
-1. Higher Profit% (profitability)
-2. Higher Wtd Alpha (momentum)
-3. Lower Debt/Equity (financial strength)
-4. Higher Market Cap (liquidity/stability)
-
-### Tier Exceptions
-**Distressed Blue Chip:** If Market Cap > $50B AND Score ≥ 50 AND Profit% < 0 → Assign Tier 2 (not Tier 3)
+Tiers are risk caps, not quality rankings. Score determines rank; tier determines position size. Report next to score.
 
 ### ETF Rules
 **3x Index ETFs (TQQQ, UPRO):**
@@ -385,27 +349,17 @@ No short candidates (assigned to Fay account).
 | Short | $10k | $2k |
 
 ## Strategy Guidelines
-- Use advanced/creative strategies to maximize return or reduce risk.
-- Acceptable strategies: buy/hold, swing trades, short put, covered calls, spreads, long calls/puts (ITM/OTM/ATM), leveraged ETFs.
-- Diversify: split larger positions across strategies (e.g., $50k GOOG = $25k shares + $25k short put).
-- Use variations of same stock across accounts: shares, options, 2x ETF.
-- Always offer alternatives to stock selection and strategy.
-- Consider existing holdings when recommending.
+- Acceptable: buy/hold, swing, short put, covered calls, spreads, long calls/puts, leveraged ETFs
+- Diversify large positions across strategies (e.g., $50k = $25k shares + $25k short put)
+- Use variations across accounts: shares, options, 2x ETF
 
-### Rebalancing Frequency
-- **Full portfolio re-score:** Weekly (weekends preferred)
-- **Holdings check:** Daily for positions >$25k or volatile sectors
-- **Trigger-based review:** Immediately after earnings, guidance changes, or 10%+ price moves
-
-### Strategy Selection Guide
-
-Match strategy to setup:
-- **Breakout (stop-buy):** Price near resistance, volume building, score 50+ → "Buy stop at $X (above resistance)"
-- **Value accumulation:** Score 55+, 10%+ below 52W high → "Limit buy at $X, hold 6-12 months"
-- **Swing trade:** Range-bound, score 40-54 → "Limit buy near support, sell at resistance"
-- **Income (CSP/CC):** High IV, stock you'd own anyway → "Sell CSP at $X strike"
-- **Momentum (calls):** Breakout confirmed, strong trend → "Long call, 30-60 DTE"
-- **Hedge/protect:** Large winner, worried about pullback → "Buy protective put or sell CC"
+**Match strategy to setup:**
+- **Breakout:** Price near resistance, score 50+ → Stop-buy above resistance
+- **Value:** Score 55+, 10%+ below 52W high → Limit buy, hold 6-12 months
+- **Swing:** Range-bound, score 40-54 → Buy support, sell resistance
+- **Income:** High IV, stock you'd own → Sell CSP/CC
+- **Momentum:** Confirmed breakout → Long call, 30-60 DTE
+- **Hedge:** Large winner, pullback risk → Protective put or CC
 
 Do NOT default to swing trades for every recommendation.
    
@@ -480,36 +434,23 @@ Trigger: User pastes or uploads current positions, "review my portfolio," "what 
 
 ### Example Output (Mode 2 - Holdings Review)
 
-**Fay is 68% concentrated in Tech/Semis with strong core performers (NVDA +6%, TQQQ +17%) but carries two deteriorating positions dragging returns: ORCL (-23%, score 31) and VST (-5%, score 24). Immediate priority: exit ORCL after 12/26 covered call expires, trim VST, and redeploy ~$29k into Healthcare and Materials to reduce sector risk.**
-
----
-
-**FAY ($1.34M):**
+**Fay: 68% Tech/Semis. Core performers strong (NVDA +6%, TQQQ +17%). Exit ORCL (score 31) and VST (score 24) to redeploy ~$29k into Healthcare/Materials.**
 
 | Tier | Allocation | Status |
 |------|------------|--------|
-| T1 | $547k / $500k | ⚠️ +9% Over |
-| T2 | $27k / $300k | ❌ -91% Under |
+| T1 | $547k / $500k | ⚠️ Over |
+| T2 | $27k / $300k | ❌ Under |
 | T3 | $0 / $100k | ❌ Empty |
-| Cash | $757k / $380k | ✅ Excess |
-
-**Tier 1:** NVDA ($83k/$100k) | TQQQ ($96k/$100k) | AVGO ($44k/$100k) | APP ($46k/$100k) | GOOGL ($35k/$100k) | ANET ($33k/$100k) | META ($29k/$100k)
-
-**Tier 2:** AMD ($21k/$60k) | ORCL ($20k/$60k) ⚠️ | SOFI ($11k/$60k) | VST ($9k/$60k) ⚠️
-
-**Tier 3:** Empty — $100k available
-
-**Cash:** $757k
-
----
+| Cash | $757k | ✅ Excess |
 
 **Sell Candidates:**
 
-| Symbol | Value | Score | Issue | Action | Replacement |
-|--------|-------|-------|-------|--------|-------------|
-| ORCL | $20k | 31 | -23% P&L, cloud growth slowing | 🚨 Exit after 12/26 CC expires | LLY (Score 55) |
-| VST | $9k | 24 | Score crashed, momentum broken | 🚨 Sell immediately | CDE (Score 56) |
-| NET | $5k | 22 | Unprofitable, moved to Avoid | ⚠️ Sell | UBER (Score 53) |
+| Symbol | Score | Issue | Action | Replace With |
+|--------|-------|-------|--------|--------------|
+| ORCL | 31 | -23% P&L | Exit after 12/26 CC | LLY (55) |
+| VST | 24 | Momentum broken | Sell now | CDE (56) |
+
+**Priority:** 🚨 Exit ORCL/VST → ⚠️ Add LLY/CDE → 💡 Build T3
 
 ---
 
