@@ -1,0 +1,49 @@
+Create a stock scoring system in Python for QuantConnect Research environment. Score each stock based on 12 questions using price history and Morningstar fundamentals.
+
+**Data needed:**
+- Price history: 252 trading days of daily OHLCV
+- Fundamentals: ValuationRatios.PERatio, OperationRatios.NetMargin, OperationRatios.ROE, OperationRatios.ROA, OperationRatios.TotalDebtEquityRatio, CompanyProfile.CountryId
+
+**Calculated fields from price history:**
+- 50D MA = mean of last 50 closes
+- 200D MA = mean of last 200 closes
+- 10D %Chg = (close[-1] - close[-10]) / close[-10] × 100
+- 1M %Chg = (close[-1] - close[-21]) / close[-21] × 100
+- 3M %Chg = (close[-1] - close[-63]) / close[-63] × 100
+- 52W %Chg = (close[-1] - close[-252]) / close[-252] × 100
+- 20D Avg Vol = mean of last 20 volume values
+- Relative Volume = volume[-1] / 20D Avg Vol
+
+**Scoring Questions (12 total, max 37 points for US stocks):**
+
+Q1. P/E (ValuationRatios.PERatio): 1-60→4, 61-100→3, 101-150→2, 151-299→1, 300-400→0, >400→-5, 0→-2, <0→-2
+
+Q2. Profit Margin (NetMargin×100): >50%→5, 30-50%→4, 15-<30%→3, 5-<15%→2, 0-<5%→1, <0%→0
+
+Q3. 1-Month % Change: >10%→3, 5-10%→2, 0-<5%→1, <0%→0
+
+Q4. 10-Day % Change: ≥15%→3, 5-<15%→2, 0-<5%→1, <0%→0
+
+Q5. Relative Volume: ≥1.5→3, 1.0-<1.5→2, 0.8-<1.0→1, <0.8→0
+
+Q6. Price vs MAs: Above both 50D and 200D→3, Above one→2, Below both→0
+
+Q7. 20D Avg Volume: ≥1,000,000→3, 500,000-<1,000,000→2, 200,000-<500,000→1, <200,000→0
+
+Q8. Debt/Equity (TotalDebtEquityRatio): <0→-10, ≥3.0→-5, 1.5-<3.0→1, 0.5-<1.5→2, 0-<0.5→3
+
+Q9. ROE (ROE×100): >20%→3, 10-20%→2, 5-<10%→1, <5%→0
+
+Q10. ROA (ROA×100): >15%→3, 10-15%→2, 5-<10%→1, <5%→0
+
+Q11. Country (CompanyProfile.CountryId): USA→+1, Developed (CAN, GBR, DEU, FRA, NLD, CHE, AUS, JPN, IRL, BEL, ESP, ITA, AUT, SWE, NOR, DNK, FIN, NZL)→-5, Other→-8
+
+Q12. Trend Consistency: Both 3M %Chg and 52W %Chg > 0→3, Only one > 0→1, Both ≤ 0→0
+
+**Test symbols:** NVDA, GOOG, AAPL, MSFT, MU, LRCX, TSLA, AMZN
+
+**Target date:** Most recent available trading day
+
+**Output:** Print ranked list by score (highest first) showing: Symbol, Score, Price, P/E, 1M%, 10D%, and individual Q1-Q12 scores.
+
+Handle missing fundamental data by scoring 0 for that question. Parse Morningstar time-series format (1Y:value;) using regex if needed.
