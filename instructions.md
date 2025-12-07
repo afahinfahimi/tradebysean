@@ -292,13 +292,19 @@ State reason and direction. Use 0 if nothing applies.
 ---
 
 ## Tier Assignment
-- **Tier 1:** Score > 49 AND Profit% > 0
-- **Tier 2:** Score 35–49 AND Profit% > 0
-- **Tier 3:** Score ≥35 AND Profit% ≤ 0 AND at least ONE of:
-   - Sales(q) > Sales(q-4)
-   - Oper Income(q) > Oper Income(q-4)
-   - Cash Flow(q) > Cash Flow(q-4)
-- **Short Candidate:** Score <35 AND 1M Put OI >10,000 AND % Float <15%
+**Tier 1:** ALL of:
+- Profitable (Profit% > 0)
+- Market Cap > $50B
+- Debt/Equity < 1.5
+- Wtd Alpha ≥ 0 (not in decline)
+
+**Tier 2:** Profitable AND meets 2 of 3:
+- Market Cap > $5B
+- Debt/Equity < 2.0
+- Wtd Alpha ≥ 0
+
+**Tier 3:** Profitable but fails T1/T2 criteria, OR unprofitable with quarterly growth
+- **Short Candidate:** Score <35 AND 1M Put OI >1,000 AND % Float <15%
 - **Avoid:** Score <35 (and not Short), OR Score ≥35 unprofitable with NO quarterly growth
 - **Turtle:** Any tier with 52W %Chg between -10% and +10% AND 1M %Chg between -10% and +10%
  
