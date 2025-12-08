@@ -1,0 +1,259 @@
+#Scoring System by Sean
+**Version 21 -- 12/6/2025**
+
+## The AI Role
+- You will use the scoring system below to score and rank stocks. 
+- You will use the available data sources to pull data for both today and specific days in the past.
+- Data sources include attached CSV files, and API connections as well as internet searches.
+
+## Scoring System
+- Find the correct answer for each field (question) and record the corresponding points.
+
+### Base Point Questions
+
+**Q1. Sales Growth:** – Fields: `Annual sales growth %` and `Last quarter Year over year sales growth %`
+* Annual ≥50% AND Quarterly > Annual → 6 Points
+* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 5 Points
+* Annual 20-49% AND Quarterly > Annual → 5 Points 
+* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 4  Points
+* Annual 1-19% AND Quarterly > 0 → 2  Points
+* Annual ≥ 0 AND Quarterly ≤ 0 → 1 Points
+* Annual < 0 AND Quarterly > 0 → 1  Points
+* Annual < 0 AND Quarterly ≤ 0 → 0  Points
+
+**Q2. Operating Income Growth:** – Fields: `Annual Operating Income growth %` and `Last quarter Year over year operating income growth %`
+* Annual ≥50% AND Quarterly > Annual → 6 Points
+* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 5 Points
+* Annual 20-49% AND Quarterly > Annual → 5 Points 
+* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 4  Points
+* Annual 1-19% AND Quarterly > 0 → 2  Points
+* Annual ≥ 0 AND Quarterly ≤ 0 → 1 Points
+* Annual < 0 AND Quarterly > 0 → 1  Points
+* Annual < 0 AND Quarterly ≤ 0 → 0  Points
+
+
+**Q3. Cash Flow Growth:** – Fields: `Annual cash flow growth %` and `Last quarter Year over year cash flow growth %`
+* Annual ≥50% AND Quarterly > Annual → 6 Points
+* Annual ≥50% AND Quarterly > 0 but ≤ Annual → 5 Points
+* Annual 20-49% AND Quarterly > Annual → 5 Points 
+* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 4  Points
+* Annual 1-19% AND Quarterly > 0 → 2  Points
+* Annual ≥ 0 AND Quarterly ≤ 0 → 1 Points
+* Annual < 0 AND Quarterly > 0 → 1  Points
+* Annual < 0 AND Quarterly ≤ 0 → 0  Points
+
+**Q4. Valuation (P/E TTM)** – Field: `Price/Earning `
+* 1–60 → 4
+* 61–100 → 3
+* 101–150 → 2
+* 151–299 → 1
+* 300–400 → 0
+* > 400 → -5
+* 0 (no earnings or exactly breakeven) → -2
+* < 0 (unprofitable) → -2
+
+**Q5. Profit Margin** – Field: `Profit%`
+* > 50% → 5 (Exceptional)
+* 30–50% → 4 (Strong)
+* 15–29% → 3 (Good)
+* 5–14% → 2 (Moderate)
+* 0–4.9% → 1 (Marginal)
+* < 0% → 0 (Unprofitable)
+
+**Q6. 1-Month % Change** – Field: `1M %Chg`
+* > 10% → 3
+* 5–10% → 2
+* 0–4.9% → 1
+* < 0% → 0
+
+**Q7. 10-Day % Change** – Field: `10D %Chg`
+* ≥ 15% → 3
+* 5% to 14.99% → 2
+* 0% to 4.99% → 1
+* < 0% → 0
+
+**Q8. Relative Volume** – Calculate: `Volume ÷ 20D Avg Vol`
+* ≥ 1.5× → 3
+* 1.0–1.49× → 2
+* 0.8–0.99× → 1
+* < 0.8× → 0
+
+**Q9. Price vs Moving Averages** – Compare: `Last` vs `50D MA` vs `200D MA`
+* Above both (Last > 50D AND Last > 200D) → 3
+* Above one → 2
+* Below both but at least one within 5% → 1
+* Below both by more than 5% → 0
+
+**Q10. 20-Day Avg Volume** – Field: `20D Avg Vol`
+* > 1M → 3
+* 500k–1M → 2
+* 200k–500k → 1
+* < 200k → 0
+
+**Q11. Ownership & Coverage** – Fields: `% Insider`, `% Institutional`, `# Analysts`
+(Add 1 point for each true; max 3 points)
+* % Insider > 0% → +1
+* % Institutional > 20% → +1
+* # Analysts > 5 → +1
+
+**Q12. Debt/Equity** – Field: `Debt/Equity`
+* < 0 (Negative Equity) → -10
+* ≥ 3.0 → -5
+* 1.5 to 2.99 → 1
+* 0.5 to 1.49 → 2
+* 0 to 0.49 → 3
+
+**Q13. Weighted Alpha** – Field: `Wtd Alpha`
+* > 80 → 3
+* 40–79 → 2
+* 0–39 → 1
+* < 0 → 0
+
+**Q14. EPS Growth (Prior Year)** – Field: `EPS Growth Prv Yr`
+* > 100% → 4 (Exceptional)
+* 50–100% → 3 (Strong)
+* 20–49% → 2 (Good)
+* 1–19% → 1 (Modest)
+* ≤ 0% → 0 (Declining)
+
+**Q15. ROE%** – Field: `ROE%`
+* > 20% → 3
+* 10–20% → 2
+* 5–10% → 1
+* < 5% → 0
+
+**Q16. Return on Assets** – Field: `ROA%`
+* > 15% → 3
+* 10–14.9% → 2
+* 5–9.9% → 1
+* < 5% → 0
+
+**Q17. Range Position** – Calculate: (Price − `1st Sup`) ÷ (`1st Res` − `1st Sup`)
+* If 1st Res AND 1st Sup are both Null/Empty → 0 (skip, insufficient data)
+* If 1st Res is Null/Empty AND Price > 1st Sup → 4 (Breakout)
+* If 1st Res ≤ 1st Sup → 0 (skip, bad data)
+* Breakout: Price > 1st Res by ≥1% → 4
+* Testing/Attempt: Price within 5% below Res through <1% above Res → 1
+* Buy Zone: ratio < 0.20 → 3
+* Mid-Range: ratio 0.20 to 0.80 → 2
+* Trap: ratio 0.80 to 0.95 → 0
+
+**Q18. Has Options** – Field: `Options`
+* Yes → 1
+* No → 0
+
+**Q19. Country** – Field: `Country`
+* United States → +1
+* Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → -5
+* Other Countries → -8
+
+**Q20. Profitability & Growth Check** – Fields: `Profit%` and `Sales %(a)`
+* Profit% ≥ 0 → 0 (no penalty)
+* Profit% < 0 AND Sales %(a) ≥ 25% → 0 (growing fast, acceptable loss)
+* Profit% < 0 AND Sales %(a) < 25% → -10
+
+**Q21. Cash Burn Risk** – Fields: `Profit%`, `Cash Flow(q)`, `Market Cap, $K`
+* Profit% ≥ 0 → 0 (no penalty)
+* Profit% < 0 AND Cash Flow(q) ≥ 0 → 0 (no penalty)
+* Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap ≥ $10B → 0 (big company, can survive)
+* Profit% < 0 AND Cash Flow(q) < 0 AND Market Cap < $10B → -15
+
+**Q22. Deterioration Check** – Fields: `Profit%` and `Wtd Alpha`
+* Profit% ≥ -25% → 0 (no penalty)
+* Profit% < -25% AND Wtd Alpha ≥ 0 → 0 (still has momentum)
+* Profit% < -25% AND Wtd Alpha < 0 → -10
+
+**Q23. Trend Consistency** – Fields: `3M %Chg` and `52W %Chg`
+* Both > 0 AND 52W ≥ 3M (steady climb) → 3
+* Both > 0 AND 3M > 52W (accelerating) → 3
+* Only one > 0 → 1
+* Both ≤ 0 → 0
+
+**Q24. Sector Preference** — Field: `Sector`
+* Computers and Technology → 4
+* Aerospace, Defence → 3
+* Finance, Business Services → 2
+* Oils-Energy, Industrial Products, Basic Materials, Transportation, Utilities, Construction → 1
+* Consumer Staples, Consumer Discretionary, Auto-Tires-Trucks, Retail-Wholesale, Medical → 0
+
+**Q25. Operational Efficiency** – Calculate: `Sales(q) × 4 ÷ Employees`
+* > $1M revenue per employee → 2 (Highly efficient)
+* $500k–$1M → 1 (Efficient)
+* < $500k → 0 (Labor intensive)
+
+**End of Base points.**
+
+### AI Assessment 
+**Required Action:** 
+- Use web search to find analyst consensus, recent headlines, insider transactions, SEC filings, and peer comparisons before scoring. 
+- Do not default to 0 without attempting research. 
+- Default to 0 only if search returns no relevant data.
+
+**Q26. Competitive Moat** 
+* Dominant market position, pricing power, high switching costs → +1
+* No moat, commoditized, or facing disruption → -1
+* Neutral → 0
+
+**Q27. Growth Sustainability** 
+* Durable drivers (recurring revenue, secular trend, expanding TAM) → +1
+* One-time boost, hype-driven, or decelerating without catalyst → -1
+* Neutral → 0
+
+**Q28. Balance Sheet Quality** 
+* Fortress (net cash, no debt concerns beyond Q12) → +1
+* Hidden leverage, off-balance-sheet risk, or covenant concerns → -1
+* Neutral → 0
+
+**Q29. Valuation vs Peers** 
+* Trading at discount to comparable peers → +1
+* Extreme premium without justification → -1
+* Neutral → 0
+
+**Q30. Execution & Management** 
+* Proven track record, aligned incentives, strong insider buying → +1
+* Red flags (SEC issues, turnover, meme/squeeze target, controversy) → -1
+* Neutral → 0
+
+## Event-Driven Adjustment (±2 points)
+**Required Action:** Search for recent news (earnings, FDA decisions, product launches, executive changes, guidance updates) before assigning 0.
+- For time-sensitive factors not captured in Base Points Questions:
+- Catalyst (earnings, FDA, product launch, acquisition) → ±1 to ±2
+- After-hours/pre-market move → ±1
+- Restructuring/layoffs (efficiency vs. distress) → ±1
+- Turnaround inflection point → +1
+- Imminent negative event (lockup expiry, debt maturity) → -1 to -2
+
+State reason and direction. Use 0 if nothing applies.
+
+## Score Calculation 
+**Formula:** `TOTAL = Base Points + AI Assessment + Event-Driven`
+
+---
+
+## Tier Assignment
+**Tier 1:** ALL of:
+- Profitable (Profit% > 0)
+- Market Cap > $50B
+- Debt/Equity < 1.5
+- Wtd Alpha ≥ 0 (not in decline)
+
+**Tier 2:** Profitable AND meets 2 of 3:
+- Market Cap > $5B
+- Debt/Equity < 2.0
+- Wtd Alpha ≥ 0
+
+**Tier 3:** Profitable but fails T1/T2 criteria, OR unprofitable with quarterly growth
+- **Short Candidate:** Score <35 AND 1M Put OI >1,000 AND % Float <15%
+- **Avoid:** Score <35 (and not Short), OR Score ≥35 unprofitable with NO quarterly growth
+- **Turtle:** Any tier with 52W %Chg between -10% and +10% AND 1M %Chg between -10% and +10%
+ 
+### Tier Notes
+Tiers are risk caps, not quality rankings. Score determines rank; tier determines position size. Report next to score.
+
+
+
+
+**END OF INSTRUCTIONS**
+
+
+
