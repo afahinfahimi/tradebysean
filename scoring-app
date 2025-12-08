@@ -43,9 +43,8 @@
 34. 1-Month Put Open Interest
 35. Short Interest as % of Float
 
-
 ## Data Validation
-Check the availablility of the data, and report to the user any missing or unreliable data field.
+Check the availability of the data, and report to the user any missing or unreliable data field.
 
 ## Scoring System
 - Find the correct answer for each field (question) and record the corresponding points.
@@ -55,9 +54,9 @@ Check the availablility of the data, and report to the user any missing or unrel
 **Q1. Sales Growth:** – Use: `Annual Sales Growth %` AND `Quarterly Sales Growth % YOY`
 * Annual ≥50% AND Quarterly > Annual → 6 points
 * Annual ≥50% AND Quarterly > 0 but ≤ Annual → 5 points
-* Annual 20-49% AND Quarterly > Annual → 5 points 
-* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 4 points
-* Annual 1-19% AND Quarterly > 0 → 2 points
+* Annual 20% to < 50% AND Quarterly > Annual → 5 points 
+* Annual 20% to < 50% AND Quarterly > 0 but ≤ Annual → 4 points
+* Annual 0% to < 20% AND Quarterly > 0 → 2 points
 * Annual ≥ 0 AND Quarterly ≤ 0 → 1 point
 * Annual < 0 AND Quarterly > 0 → 1 point
 * Annual < 0 AND Quarterly ≤ 0 → 0 points
@@ -65,9 +64,9 @@ Check the availablility of the data, and report to the user any missing or unrel
 **Q2. Operating Income Growth:** – Use: `Annual Operating Income Growth %` AND `Quarterly Operating Income Growth % YOY`
 * Annual ≥50% AND Quarterly > Annual → 6 points
 * Annual ≥50% AND Quarterly > 0 but ≤ Annual → 5 points
-* Annual 20-49% AND Quarterly > Annual → 5 points 
-* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 4 points
-* Annual 1-19% AND Quarterly > 0 → 2 points
+* Annual 20% to < 50% AND Quarterly > Annual → 5 points 
+* Annual 20% to < 50% AND Quarterly > 0 but ≤ Annual → 4 points
+* Annual 0% to < 20% AND Quarterly > 0 → 2 points
 * Annual ≥ 0 AND Quarterly ≤ 0 → 1 point
 * Annual < 0 AND Quarterly > 0 → 1 point
 * Annual < 0 AND Quarterly ≤ 0 → 0 points
@@ -75,21 +74,21 @@ Check the availablility of the data, and report to the user any missing or unrel
 **Q3. Cash Flow Growth:** – Use: `Annual Cash Flow Growth %` AND `Quarterly Cash Flow Growth % YOY`
 * Annual ≥50% AND Quarterly > Annual → 6 points
 * Annual ≥50% AND Quarterly > 0 but ≤ Annual → 5 points
-* Annual 20-49% AND Quarterly > Annual → 5 points 
-* Annual 20-49% AND Quarterly > 0 but ≤ Annual → 4 points
-* Annual 1-19% AND Quarterly > 0 → 2 points
+* Annual 20% to < 50% AND Quarterly > Annual → 5 points 
+* Annual 20% to < 50% AND Quarterly > 0 but ≤ Annual → 4 points
+* Annual 0% to < 20% AND Quarterly > 0 → 2 points
 * Annual ≥ 0 AND Quarterly ≤ 0 → 1 point
 * Annual < 0 AND Quarterly > 0 → 1 point
 * Annual < 0 AND Quarterly ≤ 0 → 0 points
 
 **Q4. Valuation (P/E Ratio)** – Use: `Price to Earnings Ratio (TTM)`
-* 1–60 → 4 points
-* 61–100 → 3 points
-* 101–150 → 2 points
-* 151–299 → 1 point
-* 300–400 → 0 points
+* > 0 to 60 → 4 points
+* > 60 to 100 → 3 points
+* > 100 to 150 → 2 points
+* > 150 to 300 → 1 point
+* > 300 to 400 → 0 points
 * > 400 → -5 points
-* 0 (no earnings or exactly breakeven) → -2 points
+* N/A (no earnings) → -2 points
 * < 0 (unprofitable) → -2 points
 
 **Q5. Profit Margin** – Use: `Net Profit Margin %`
@@ -149,7 +148,7 @@ Check the availablility of the data, and report to the user any missing or unrel
 * > 100% → 4 points
 * 50% to 100% → 3 points
 * 20% to < 50% → 2 points
-* 1% to < 20% → 1 point
+* > 0% to < 20% → 1 point
 * ≤ 0% → 0 points
 
 **Q15. Return on Equity** – Use: `Return on Equity %`
@@ -165,12 +164,16 @@ Check the availablility of the data, and report to the user any missing or unrel
 * < 5% → 0 points
 
 **Q17. Range Position** – Calculate: (`Current Price` − `First Support Level`) ÷ (`First Resistance Level` − `First Support Level`)
+
 **Data Validation (evaluate first):**
 * Both Support AND Resistance are Null/Empty → 0 points
 * Only Resistance is Null AND Price > Support → 4 points (Breakout)
+* Only Resistance is Null AND Price ≤ Support → 0 points (At/Below Support)
+* Only Support is Null → 0 points (insufficient data)
 * Resistance ≤ Support → 0 points (bad data)
 
 **Scoring (first match wins):**
+* ratio < 0 → 0 points (Below Support)
 * ratio > 1.01 → 4 points (Breakout)
 * ratio > 0.95 → 1 point (Testing Resistance)
 * ratio ≥ 0.80 → 0 points (Trap Zone)
@@ -207,21 +210,28 @@ Check the availablility of the data, and report to the user any missing or unrel
 * Both ≤ 0 → 0 points
 
 **Q24. Sector Preference** — Use: `Company Sector`
-* Computers and Technology → 4 points
+* Computers and Technology, Communication Services → 4 points
 * Aerospace, Defense → 3 points
 * Finance, Business Services → 2 points
 * Oils-Energy, Industrial Products, Basic Materials, Transportation, Utilities, Construction → 1 point
 * Consumer Staples, Consumer Discretionary, Auto-Tires-Trucks, Retail-Wholesale, Medical → 0 points
+* Other/Unlisted → 0 points
 
-**End of Base points.**
+---
 
-### AI Assessment 
-**Required Action:** 
-- Use web search to find analyst consensus, recent headlines, insider transactions, SEC filings, and peer comparisons before scoring. 
-- Do not default to 0 without attempting research. 
-- Default to 0 only if search returns no relevant data.
+### **Checkpoint: Base Score Calculation**
+* **Action:** Stop and calculate the sum of Q1–Q24.
+* **Output:** "Base Score Subtotal: [X]/[Max]"
 
-**Q25. Competitive Moat** 
+---
+
+### AI Assessment Questions (Qualitative)
+**Required Action:**
+* **Research First:** Use web search to find analyst consensus, recent headlines, insider transactions, SEC filings, and peer comparisons before scoring.
+* **Zero Policy:** Do not default to 0 without attempting research. State the specific search query used if data is missing.
+* **Default:** Default to 0 *only* if search returns no relevant data after 3 attempts.
+
+**Q25. Competitive Moat**
 * Dominant market position, pricing power, high switching costs → +1 point
 * No moat, commoditized, or facing disruption → -1 point
 * Neutral → 0 points
@@ -273,13 +283,19 @@ State reason and direction. Use 0 points if nothing applies.
 - Debt/Equity Ratio < 2.0
 - Weighted Alpha ≥ 0
 
-**Tier 3:** Profitable but fails T1/T2 criteria, OR unprofitable with quarterly growth
+**Tier 3:** Profitable but fails T1/T2 criteria, OR unprofitable with Quarterly Sales Growth > 0
+
+**Untiered (Avoid):** Unprofitable with Quarterly Sales Growth ≤ 0
+
+**Tags (apply to any tier):**
 - **Short Candidate:** Score <35 AND 1-Month Put Open Interest >1,000 AND Short Interest as % of Float <15%
-- **Avoid:** Score <35 (and not Short), OR Score ≥35 unprofitable with NO quarterly growth
-- **Turtle:** Any tier with 52-Week Price Change between -10% and +10% AND 1-Month Price Change between -10% and +10%
- 
+- **Avoid:** Score <35 (and not Short Candidate)
+- **Turtle:** 52-Week Price Change between -10% and +10% AND 1-Month Price Change between -10% and +10%
+
 ### Tier Notes
-- Tiers are risk caps, not quality rankings. Score determines rank; tier determines position size. 
-- Report next to score as a tag.
+- **Distinction:** Tiers are risk caps, not quality rankings.
+    - **Score** determines the rank (How good is the stock?).
+    - **Tier** determines the position size (How much should I buy?).
+- **Display:** Report the Tier and any Tags clearly next to the final score.
 
 **End of the instructions**
