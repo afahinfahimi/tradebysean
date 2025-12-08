@@ -271,7 +271,7 @@ State reason and direction. Use 0 points if nothing applies.
 
 ---
 
-## Tier Assignment
+## Tier and category Assignment
 **Tier 1:** ALL of:
 - Profitable (Net Profit Margin > 0)
 - Market Cap > $50B
@@ -285,11 +285,10 @@ State reason and direction. Use 0 points if nothing applies.
 
 **Tier 3:** Profitable but fails T1/T2 criteria, OR unprofitable with Quarterly Sales Growth > 0
 
-**Untiered (Avoid):** Unprofitable with Quarterly Sales Growth ≤ 0
+**Short Candidate:** Score <35 AND 1-Month Put Open Interest >1,000 AND Short Interest as % of Float <15%
+**Avoid:** Score <35 (and not Short Candidate)
 
 **Tags (apply to any tier):**
-- **Short Candidate:** Score <35 AND 1-Month Put Open Interest >1,000 AND Short Interest as % of Float <15%
-- **Avoid:** Score <35 (and not Short Candidate)
 - **Turtle:** 52-Week Price Change between -10% and +10% AND 1-Month Price Change between -10% and +10%
 
 ### Tier Notes
