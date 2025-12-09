@@ -18,9 +18,9 @@
 
 ## FMP API Configuration
 
-**API Key:** `w8PbHgG7V3l9XPJ5wCF9RasfT4Db8ONi`
-**Base URL:** `https://financialmodelingprep.com/stable/`
-**Authentication:** Append `?apikey=YOUR_API_KEY` to all requests. Use `&apikey=` if other parameters exist.
+- **API Key:** `w8PbHgG7V3l9XPJ5wCF9RasfT4Db8ONi`
+- **Base URL:** `https://financialmodelingprep.com/stable/`
+- **Authentication:** Append `?apikey=YOUR_API_KEY` to all requests. Use `&apikey=` if other parameters exist.
 
 ### Primary Endpoints Required
 
@@ -252,23 +252,21 @@ If API data is unavailable for any field, mark as **N/A** and skip that question
 * > 6.0% → 0 (Very high volatility)
 
 
-**Q18. Has Options** – Field: N/A
-* **SKIP** — Not available via API. Score as 0 (neutral).
+**Q18. Country** – Field: `country` from profile
 
-**Q19. Country** – Field: `country` from profile
 * United States → +2
 * Developed (Canada, UK, Germany, France, Netherlands, Switzerland, Australia, Japan, Ireland, Belgium, Spain, Italy, Austria, Sweden, Norway, Denmark, Finland, New Zealand) → 0
 * Other Countries → -2
 
 
-**Q20. Profitability & Growth Check** – Fields: `netProfitMarginTTM` and `revenueGrowth`
+**Q19. Profitability & Growth Check** – Fields: `netProfitMarginTTM` and `revenueGrowth`
 
 * netProfitMarginTTM ≥ 0 → 0 (no penalty)
 * netProfitMarginTTM < 0 AND revenueGrowth ≥ 25% → 0 (growing fast, acceptable loss)
 * netProfitMarginTTM < 0 AND revenueGrowth < 25% → -10
 
 
-**Q21. Cash Burn Risk** – Fields: `netProfitMarginTTM`, `operatingCashFlow` (quarterly), `mktCap`
+**Q20. Cash Burn Risk** – Fields: `netProfitMarginTTM`, `operatingCashFlow` (quarterly), `mktCap`
 
 * netProfitMarginTTM ≥ 0 → 0 (no penalty)
 * netProfitMarginTTM < 0 AND operatingCashFlow ≥ 0 → 0 (no penalty)
@@ -276,14 +274,14 @@ If API data is unavailable for any field, mark as **N/A** and skip that question
 * netProfitMarginTTM < 0 AND operatingCashFlow < 0 AND mktCap < $10B → -15
 
 
-**Q22. Deterioration Check** – Fields: `netProfitMarginTTM` and calculated `Wtd Alpha`
+**Q21. Deterioration Check** – Fields: `netProfitMarginTTM` and calculated `Wtd Alpha`
 
 * netProfitMarginTTM ≥ -25% → 0 (no penalty)
 * netProfitMarginTTM < -25% AND Wtd Alpha ≥ 0 → 0 (still has momentum)
 * netProfitMarginTTM < -25% AND Wtd Alpha < 0 → -10
 
 
-**Q23. Trend Consistency** – Fields: `3M` and `1Y` from stock-price-change
+**Q22. Trend Consistency** – Fields: `3M` and `1Y` from stock-price-change
 
 * Both > 0 AND 1Y ≥ 3M (steady climb) → 3
 * Both > 0 AND 3M > 1Y (accelerating) → 3
@@ -291,7 +289,7 @@ If API data is unavailable for any field, mark as **N/A** and skip that question
 * Both ≤ 0 → 0
 
 
-**Q24. Sector Preference** — Field: `sector` from profile
+**Q23. Sector Preference** — Field: `sector` from profile
 
 * Technology → 4
 * Industrials (Aerospace, Defense subsectors) → 3
@@ -300,7 +298,7 @@ If API data is unavailable for any field, mark as **N/A** and skip that question
 * Consumer Defensive, Healthcare, Real Estate, Communication Services → 0
 
 
-**Q25. Operational Efficiency** – Calculate: `(revenue × 4) ÷ employeeCount`
+**Q24. Operational Efficiency** – Calculate: `(revenue × 4) ÷ employeeCount`
 - Use latest quarterly revenue, annualize it
 
 * > $1,000,000 revenue per employee → 2 (Highly efficient)
@@ -308,7 +306,7 @@ If API data is unavailable for any field, mark as **N/A** and skip that question
 * < $500,000 → 0 (Labor intensive)
 
 
-**Q26. Growth Sustainability** – Fields: `revenueGrowth` (multiple periods from financial-growth)
+**Q25. Growth Sustainability** – Fields: `revenueGrowth` (multiple periods from financial-growth)
 - Retrieve last 3 annual periods of revenueGrowth
 
 * Consistent growth (all 3 periods positive, no deceleration >50%) → +2
@@ -316,7 +314,7 @@ If API data is unavailable for any field, mark as **N/A** and skip that question
 * Declining trend (most recent < previous) or mostly negative → 0
 
 
-**Q27. Balance Sheet Quality** – Fields: `currentRatioTTM`, `cashRatioTTM`, `debtEquityRatioTTM`
+**Q26. Balance Sheet Quality** – Fields: `currentRatioTTM`, `cashRatioTTM`, `debtEquityRatioTTM`
 - Beyond Q12 debt check, assess overall balance sheet
 
 * currentRatioTTM > 2.0 AND cashRatioTTM > 0.5 AND debtEquityRatioTTM < 0.5 → +2 (Fortress)
@@ -336,13 +334,13 @@ If API data is unavailable for any field, mark as **N/A** and skip that question
 - Do not default to 0 without attempting research.
 - Default to 0 only if search returns no relevant data.
 
-**Q28. Competitive Moat**
+**Q27. Competitive Moat**
 
 * Dominant market position, pricing power, high switching costs → +1
 * No moat, commoditized, or facing disruption → -1
 * Neutral → 0
 
-**Q29. Valuation vs Peers**
+**Q28. Valuation vs Peers**
 - Use `/stable/stock-peers` to identify peers, compare P/E ratios
 
 * Trading at discount to comparable peers → +1
@@ -350,7 +348,7 @@ If API data is unavailable for any field, mark as **N/A** and skip that question
 * Neutral → 0
 
 
-**Q30. Execution & Management**
+**Q29. Execution & Management**
 - Use `/stable/insider-trading/search` to check recent insider activity
 
 * Proven track record, aligned incentives, strong insider buying → +1
@@ -358,12 +356,12 @@ If API data is unavailable for any field, mark as **N/A** and skip that question
 * Neutral → 0
 
 
-**Q31. Insider Ownership Present** – Field: Check `/stable/insider-trading/search`
+**Q30. Insider Ownership Present** – Field: Check `/stable/insider-trading/search`
 
 - If any insider buy transactions in last 12 months → +1
 - If no data or only sells → 0
 
-**Q32. Institutional Ownership Present** – Field: Check `/stable/institutional-ownership/symbol-positions-summary`
+**Q31. Institutional Ownership Present** – Field: Check `/stable/institutional-ownership/symbol-positions-summary`
 
 - If investorsHolding > 0 (institutions hold shares) → +1
 - If no institutional ownership data → 0
@@ -661,8 +659,6 @@ Wtd Alpha = (1Y %Chg × 0.20) + (3M %Chg × 0.40) + (1M %Chg × 0.40)
 
 ### Fields to SKIP in Historical Mode
 
-### Fields to SKIP in Historical Mode
-
 - **AI Assessment (Q28-Q32):** Requires current web search; not reconstructable
 - **Event-Driven Adjustment:** Time-sensitive news not available historically
 - **Insider/Institutional Activity:** Point-in-time ownership data not reliably available
@@ -705,13 +701,11 @@ Alert user to these limitations when running historical backtests.
 
 ## API Error Handling
 
-| Error Type | Action |
-|------------|--------|
-| 404 / Symbol not found | Alert user, skip symbol |
-| Empty response | Mark all fields as N/A, score as 0 for those questions |
-| Rate limit (429) | Wait and retry, or reduce batch size |
-| Null field value | Mark specific field as N/A, skip that question |
-| API timeout | Retry once, then alert user |
+- **404 / Symbol not found:** Alert user, skip symbol
+- **Empty response:** Mark all fields as N/A, score as 0 for those questions
+- **Rate limit (429):** Wait and retry, or reduce batch size
+- **Null field value:** Mark specific field as N/A, skip that question
+- **API timeout:** Retry once, then alert user
 
 ---
 
@@ -728,7 +722,7 @@ For full scoring, make these calls per symbol:
 7. `/stable/financial-growth?symbol=&period=annual&limit=3` — growth rates
 8. `/stable/employee-count?symbol=` — employeeCount
 9. `/stable/technical-indicators/standarddeviation?symbol=&periodLength=20&timeframe=1day` — volatility
-10. `/stable/grades-consensus?symbol=` — analyst count
+10. `/stable/grades-consensus?symbol=` — analyst coverage
 11. `/stable/insider-trading/search?symbol=&limit=10` — insider activity (AI Assessment)
 12. `/stable/institutional-ownership/symbol-positions-summary?symbol=` — institutional presence (AI Assessment)
 
