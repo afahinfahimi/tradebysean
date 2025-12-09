@@ -387,8 +387,8 @@ State reason and direction. Use 0 if nothing applies.
 
 **Formula:** `TOTAL = Base Points + AI Assessment + Event-Driven`
 
-**Maximum Possible Score (approximate):** ~65 points
-**Minimum Possible Score:** Negative (due to penalties)
+**Maximum Possible Score:** ~85 points
+**Minimum Possible Score:** ~-57 (due to penalties)
 
 ---
 
@@ -613,7 +613,9 @@ Symbol | Score | Tier | Sector | Analysis | Action | Alternative | Max Loss | Ma
 
 ---
 
-## Historical Backtesting Mode
+### Fields to SKIP in Historical Mode
+
+- **AI Assessment (Q27-Q31):** Requires current web search; not reconstructable
 
 ### Trigger
 
@@ -668,9 +670,9 @@ Wtd Alpha = (1Y %Chg × 0.20) + (3M %Chg × 0.40) + (1M %Chg × 0.40)
 
 ### Historical Scoring Formula
 
-**Formula:** `HISTORICAL TOTAL = Base Points Only (excluding Q11, Q17, Q28-Q32, Event-Driven)`
+**Formula:** `HISTORICAL TOTAL = Base Points Only (excluding Q11, Q17, Q27-Q31, Event-Driven)`
 
-**Adjusted Maximum:** ~50 points (reduced due to skipped questions)
+**Adjusted Maximum:** ~73 points (reduced due to skipped questions)
 
 ### Historical Output Format
 
