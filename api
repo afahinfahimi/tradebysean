@@ -1,0 +1,321 @@
+# Stock Scoring System for API use 
+Sean API Analyst - V1 - Dec 8, 2025
+
+##Task
+- Extract the data from financialmodelingprep.com API service. Do not estimate, or search online for the data. If the data is not available, leave the field with n/a.
+- Score each stock by answering the 25 questions below. Add or subtract points as instructed. Sum all points for the total score.
+
+---
+
+## Question 1: Sales Growth
+**Find this data:** Annual Sales Growth % AND Quarterly Sales for most recent quarter AND Quarterly Sales for same quarter last year
+**First, calculate Quarterly YoY Growth:** (Most Recent Quarter Sales minus Year-Ago Quarter Sales) divided by Year-Ago Quarter Sales
+**Then score:**
+
+If Annual Sales Growth is 50% or higher AND Quarterly YoY is greater than Annual, add 5 points.
+If Annual Sales Growth is 50% or higher AND Quarterly YoY is positive but equal to or less than Annual, add 4 points.
+If Annual Sales Growth is 20% to 49% AND Quarterly YoY is greater than Annual, add 4 points.
+If Annual Sales Growth is 20% to 49% AND Quarterly YoY is positive but equal to or less than Annual, add 3 points.
+If Annual Sales Growth is 1% to 19% AND Quarterly YoY is positive, add 2 points.
+If Annual Sales Growth is 0% AND Quarterly YoY is positive, add 1 point.
+If Annual Sales Growth is positive AND Quarterly YoY is negative, add 1 point.
+If Annual Sales Growth is negative AND Quarterly YoY is positive, add 1 point.
+If Annual Sales Growth is negative AND Quarterly YoY is negative, add 0 points.
+
+---
+
+## Question 2: Operating Income Growth
+**Find this data:** Annual Operating Income Growth % AND Quarterly Operating Income for most recent quarter AND Quarterly Operating Income for same quarter last year
+**First, calculate Quarterly YoY Growth:** (Most Recent Quarter Operating Income minus Year-Ago Quarter Operating Income) divided by Year-Ago Quarter Operating Income
+**Then score:**
+
+If Annual Operating Income Growth is 50% or higher AND Quarterly YoY is greater than Annual, add 5 points.
+If Annual Operating Income Growth is 50% or higher AND Quarterly YoY is positive but equal to or less than Annual, add 4 points.
+If Annual Operating Income Growth is 20% to 49% AND Quarterly YoY is greater than Annual, add 4 points.
+If Annual Operating Income Growth is 20% to 49% AND Quarterly YoY is positive but equal to or less than Annual, add 3 points.
+If Annual Operating Income Growth is 1% to 19% AND Quarterly YoY is positive, add 2 points.
+If Annual Operating Income Growth is 0% AND Quarterly YoY is positive, add 1 point.
+If Annual Operating Income Growth is positive AND Quarterly YoY is negative, add 1 point.
+If Annual Operating Income Growth is negative AND Quarterly YoY is positive, add 1 point.
+If Annual Operating Income Growth is negative AND Quarterly YoY is negative, add 0 points.
+
+---
+
+## Question 3: Cash Flow Growth
+**Find this data:** Annual Operating Cash Flow Growth % AND Quarterly Operating Cash Flow for most recent quarter AND Quarterly Operating Cash Flow for same quarter last year
+**First, calculate Quarterly YoY Growth:** (Most Recent Quarter Cash Flow minus Year-Ago Quarter Cash Flow) divided by Year-Ago Quarter Cash Flow
+**Then score:**
+
+If Annual Cash Flow Growth is 50% or higher AND Quarterly YoY is greater than Annual, add 5 points.
+If Annual Cash Flow Growth is 50% or higher AND Quarterly YoY is positive but equal to or less than Annual, add 4 points.
+If Annual Cash Flow Growth is 20% to 49% AND Quarterly YoY is greater than Annual, add 4 points.
+If Annual Cash Flow Growth is 20% to 49% AND Quarterly YoY is positive but equal to or less than Annual, add 3 points.
+If Annual Cash Flow Growth is 1% to 19% AND Quarterly YoY is positive, add 2 points.
+If Annual Cash Flow Growth is 0% AND Quarterly YoY is positive, add 1 point.
+If Annual Cash Flow Growth is positive AND Quarterly YoY is negative, add 1 point.
+If Annual Cash Flow Growth is negative AND Quarterly YoY is positive, add 1 point.
+If Annual Cash Flow Growth is negative AND Quarterly YoY is negative, add 0 points.
+
+---
+
+## Question 4: Valuation
+**Find this data:** Price-to-Earnings Ratio (TTM means Trailing Twelve Months)
+
+If P/E is between 1 and 60, add 4 points.
+If P/E is between 61 and 100, add 3 points.
+If P/E is between 101 and 150, add 2 points.
+If P/E is between 151 and 199, add 1 point.
+If P/E is between 200 and 399, add 0 points.
+If P/E is zero or not available or negative, add 0 points.
+If P/E is 400 or higher, subtract 6 points.
+
+---
+
+## Question 5: Profit Margin
+**Find this data:** Net Profit Margin %
+
+If Profit Margin is greater than 50%, add 5 points.
+If Profit Margin is between 30% and 50%, add 4 points.
+If Profit Margin is between 15% and 29%, add 3 points.
+If Profit Margin is between 5% and 14%, add 2 points.
+If Profit Margin is between 0% and 4.9%, add 1 point.
+If Profit Margin is negative (below 0%), add 0 points.
+
+---
+
+## Question 6: One-Month Price Change
+**Find this data:** Stock price percentage change over the last 1 month (about 21 trading days)
+
+If 1-Month Change is greater than 10%, add 3 points.
+If 1-Month Change is between 5% and 10%, add 2 points.
+If 1-Month Change is between 0% and 4.9%, add 1 point.
+If 1-Month Change is negative, add 0 points.
+
+---
+
+## Question 7: Ten-Day Price Change
+**Find this data:** Stock price percentage change over the last 10 trading days
+
+If 10-Day Change is greater than 15%, add 3 points.
+If 10-Day Change is between 5% and 14%, add 2 points.
+If 10-Day Change is between 0% and 4%, add 1 point.
+If 10-Day Change is negative, add 0 points.
+
+---
+
+## Question 8: Relative Volume
+**Find this data:** Today's trading volume AND 20-Day Average Volume
+**First, calculate Relative Volume:** Today's Volume divided by 20-Day Average Volume
+
+If Relative Volume is greater than 1.5, add 3 points.
+If Relative Volume is between 1.1 and 1.5, add 2 points.
+If Relative Volume is between 0.8 and 1.0, add 1 point.
+If Relative Volume is less than 0.8, add 0 points.
+
+---
+
+## Question 9: Price vs Moving Averages
+**Find this data:** Current Stock Price AND 50-Day Moving Average AND 200-Day Moving Average
+
+If Price is above both the 50-Day AND 200-Day Moving Averages, add 3 points.
+If Price is above one Moving Average but below the other, add 2 points.
+If Price is below both Moving Averages but at least one is within 5% of the price, add 1 point.
+If Price is below both Moving Averages by more than 5%, add 0 points.
+
+---
+
+## Question 10: Average Daily Volume
+**Find this data:** 20-Day Average Volume
+
+If Average Volume is greater than 1,000,000 shares per day, add 3 points.
+If Average Volume is between 500,000 and 1,000,000 shares per day, add 2 points.
+If Average Volume is between 200,000 and 500,000 shares per day, add 1 point.
+If Average Volume is less than 200,000 shares per day, add 0 points.
+
+---
+
+## Question 11: Ownership and Analyst Coverage
+**Find this data:** Insider Ownership % AND Institutional Ownership % AND Number of Analysts Covering the Stock
+This question has three parts. Score each part separately, then add them together.
+
+If Insider Ownership is greater than 0%, add 1 point.
+If Institutional Ownership is greater than 20%, add 1 point.
+If more than 5 analysts cover the stock, add 1 point.
+Maximum possible for this question is 3 points.
+
+---
+
+## Question 12: Debt-to-Equity Ratio
+**Find this data:** Debt-to-Equity Ratio
+
+If Debt-to-Equity is negative (meaning negative shareholder equity), subtract 5 points.
+If Debt-to-Equity is greater than 3.0, subtract 3 points.
+If Debt-to-Equity is between 1.5 and 3.0, add 1 point.
+If Debt-to-Equity is between 0.5 and 1.5, add 2 points.
+If Debt-to-Equity is less than 0.5, add 3 points.
+
+---
+
+## Question 13: Weighted Alpha
+**Find this data:** Weighted Alpha (this measures 1-year price performance with more weight on recent price action)
+
+If Weighted Alpha is greater than 80, add 3 points.
+If Weighted Alpha is between 40 and 79, add 2 points.
+If Weighted Alpha is between 0 and 39, add 1 point.
+If Weighted Alpha is negative, add 0 points.
+
+---
+
+## Question 14: EPS Growth
+**Find this data:** Earnings Per Share growth percentage comparing most recent fiscal year to the prior fiscal year
+
+If EPS Growth is greater than 100%, add 4 points.
+If EPS Growth is between 50% and 100%, add 3 points.
+If EPS Growth is between 20% and 49%, add 2 points.
+If EPS Growth is between 1% and 19%, add 1 point.
+If EPS Growth is 0% or negative, add 0 points.
+
+---
+
+## Question 15: Return on Equity
+**Find this data:** Return on Equity (ROE) %
+
+If ROE is greater than 20%, add 3 points.
+If ROE is between 10% and 20%, add 2 points.
+If ROE is between 5% and 10%, add 1 point.
+If ROE is less than 5%, add 0 points.
+
+---
+
+## Question 16: Return on Assets
+**Find this data:** Return on Assets (ROA) %
+
+If ROA is greater than 15%, add 3 points.
+If ROA is between 10% and 14.9%, add 2 points.
+If ROA is between 5% and 9.9%, add 1 point.
+If ROA is less than 5%, add 0 points.
+
+---
+
+## Question 17: Range Position
+**Find this data:** Current Stock Price AND First Resistance Level AND First Support Level
+**First, calculate Range Position:** (Current Price minus Support) divided by (Resistance minus Support)
+
+If Current Price is above Resistance (breakout), add 4 points.
+If Range Position is 0.20 or less (price is in bottom 20% of range, near support), add 3 points.
+If Range Position is between 0.21 and 0.80 (price is in middle of range), add 2 points.
+If Range Position is 0.81 or higher but price is still at or below Resistance (trap zone), add 0 points.
+
+---
+
+## Question 18: Options Available
+**Find this data:** Does this stock have listed options available for trading?
+
+If Yes, the stock has options, add 1 point.
+If No, the stock does not have options, add 0 points.
+
+---
+
+## Question 19: Country
+**Find this data:** Country where the company is headquartered or domiciled
+
+If the company is based in the United States, add 1 point.
+If the company is based in any other country, subtract 4 points.
+
+---
+
+## Question 20: Profitability and Growth Check
+**Find this data:** Net Profit Margin % AND Annual Sales Growth %
+
+If Profit Margin is 0% or higher (company is profitable), add 0 points. No penalty.
+If Profit Margin is negative AND Annual Sales Growth is 25% or higher, add 0 points. No penalty. Fast growth justifies losses.
+If Profit Margin is negative AND Annual Sales Growth is less than 25%, subtract 5 points.
+
+---
+
+## Question 21: Cash Burn Risk
+**Find this data:** Net Profit Margin % AND Quarterly Operating Cash Flow (most recent quarter) AND Market Capitalization
+
+If Profit Margin is 0% or higher, add 0 points. No penalty.
+If Profit Margin is negative AND Quarterly Cash Flow is 0 or positive, add 0 points. No penalty.
+If Profit Margin is negative AND Quarterly Cash Flow is negative AND Market Cap is $10 billion or more, add 0 points. No penalty. Big companies can survive.
+If Profit Margin is negative AND Quarterly Cash Flow is negative AND Market Cap is less than $10 billion, subtract 5 points.
+
+---
+
+## Question 22: Deterioration Check
+**Find this data:** Net Profit Margin % AND Weighted Alpha
+
+If Profit Margin is -25% or higher (including positive), add 0 points. No penalty.
+If Profit Margin is worse than -25% AND Weighted Alpha is 0 or positive, add 0 points. No penalty. Stock still has momentum.
+If Profit Margin is worse than -25% AND Weighted Alpha is negative, subtract 5 points.
+
+---
+
+## Question 23: Trend Consistency
+**Find this data:** 3-Month Price Change % AND 52-Week Price Change %
+
+If both are positive AND 52-Week is greater than 3-Month (steady climb), add 3 points.
+If both are positive AND 3-Month is greater than 52-Week (accelerating), add 3 points.
+If only one is positive, add 1 point.
+If both are negative, add 0 points.
+
+---
+
+## Question 24: Financial Strength
+**Find this data:** Net Profit Margin % AND Return on Equity % AND Debt-to-Equity Ratio
+
+If Profit Margin is 20% or higher AND ROE is 20% or higher AND Debt-to-Equity is less than 0.5, add 3 points.
+If Profit Margin is 15% or higher AND ROE is 15% or higher AND Debt-to-Equity is less than 1.0, add 2 points.
+If Profit Margin is 10% or higher AND ROE is 10% or higher AND Debt-to-Equity is less than 1.5, add 1 point.
+Otherwise, add 0 points.
+
+---
+
+## Question 25: Sector Preference
+**Find this data:** The company's sector or industry
+
+If the company is in Technology, Computers, Software, or Semiconductors, add 4 points.
+If the company is in Aerospace or Defense, add 3 points.
+If the company is in Finance or Business Services, add 2 points.
+If the company is in Energy, Industrials, Basic Materials, Transportation, Utilities, or Construction, add 1 point.
+If the company is in Consumer Staples, Consumer Discretionary, Automotive, Retail, or Healthcare/Medical, add 0 points.
+
+---
+
+## Score Range
+The maximum possible score is 74 points.
+The minimum possible score is -30 points (if all penalties apply).
+
+---
+
+## How to Report the Score
+- After answering all 25 questions, add up all points (including any negative points from penalties).
+- Report the final total score for the stock.
+- For multiple stock analysis, create a table including: symbol, score, tier, max position size, expected max gain and loss, entry information, exit conditions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
