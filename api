@@ -6,7 +6,7 @@
 - Build an app to analyze and score a list of stocks on a certain day. The list and the date is provided by the user.
 - To score the stocks take these steps:
     -  Create a form to take the list of stocks, the date from the user.
-    -  Extract the data for those stocks from financialmodelingprep.com API service. 
+    -  Extract the data for those stocks from financialmodelingprep.com API service. (API # is: w8PbHgG7V3l9XPJ5wCF9RasfT4Db8ONi)
     -  Do not estimate, or search online for the data. If the data is not available, leave the field with n/a.
     -  Score each stock by answering the 25 questions below. Add or subtract points as instructed. Sum all points for the total score.
     -  Allow user to ask questions or upload files and chat with the ai about the data extracted, score calculated or to ask general questions about stocks, trading, scores and investment in general.
