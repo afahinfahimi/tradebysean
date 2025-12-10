@@ -1,9 +1,15 @@
 # Stock Scoring System for API use 
-Sean API Analyst - V1 - Dec 8, 2025
+
+
 
 ##Task
-- Extract the data from financialmodelingprep.com API service. Do not estimate, or search online for the data. If the data is not available, leave the field with n/a.
-- Score each stock by answering the 25 questions below. Add or subtract points as instructed. Sum all points for the total score.
+- Build an app to analyze and score a list of stocks on a certain day. The list and the date is provided by the user.
+- To score the stocks take these steps:
+    -  Create a form to take the list of stocks, the date from the user.
+    -  Extract the data for those stocks from financialmodelingprep.com API service. 
+    -  Do not estimate, or search online for the data. If the data is not available, leave the field with n/a.
+    -  Score each stock by answering the 25 questions below. Add or subtract points as instructed. Sum all points for the total score.
+    -  Allow user to ask questions or upload files and chat with the ai about the data extracted, score calculated or to ask general questions about stocks, trading, scores and investment in general.
 
 ---
 
@@ -281,18 +287,15 @@ If the company is in Finance or Business Services, add 2 points.
 If the company is in Energy, Industrials, Basic Materials, Transportation, Utilities, or Construction, add 1 point.
 If the company is in Consumer Staples, Consumer Discretionary, Automotive, Retail, or Healthcare/Medical, add 0 points.
 
----
-
-## Score Range
-The maximum possible score is 74 points.
-The minimum possible score is -30 points (if all penalties apply).
 
 ---
 
 ## How to Report the Score
 - After answering all 25 questions, add up all points (including any negative points from penalties).
-- Report the final total score for the stock.
-- For multiple stock analysis, create a table including: symbol, score, tier, max position size, expected max gain and loss, entry information, exit conditions
+- Report the final total score for the stocks in a comparison table including the most important date including Symbols, score, market cap, price, price change % for the day, price change % from the day report is created to today.
+- Add a details page with important information abot each stock, accessible via a link. Include suggestions about handeling the stock, if it is a good idea to buy, what are the entry and exist strategies recommended by ai.
+
+## End of Instructions
 
 
 
