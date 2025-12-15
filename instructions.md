@@ -28,6 +28,7 @@
 - Last
 - 50D MA
 - 200D MA
+- 5D %Chg
 - 10D %Chg
 - 1M %Chg
 - 3M %Chg
@@ -294,7 +295,7 @@ State reason and direction. Use 0 if nothing applies.
 **Purpose:** Capture real-time catalysts that scoring misses. Does not affect score — triggers position review.
 
 ### Trigger Conditions
-- Intraday, after-hours, or gap move exceeds ±5%
+- `5D %Chg` ≥ +7% or ≤ -7%
 
 ### AI Protocol
 When triggered, automatically:
